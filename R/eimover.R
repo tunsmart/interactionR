@@ -172,7 +172,7 @@ ei.mover = function(model, coef = c(2, 3), CI.level = 0.95, type = "e") {
     if (type == "i") {
         out = data.frame(Measures = c("OR00", "OR01", "OR10", "OR11", paste("OR(",
             beta2, " on outcome [", beta1, "==0]", sep = ""), paste("OR(", beta2,
-            " on outcome [", beta1, "==0]", sep = ""), paste("OR(", beta1, " on outcome [",
+            " on outcome [", beta1, "==1]", sep = ""), paste("OR(", beta1, " on outcome [",
             beta2, "==0]", sep = ""), paste("OR(", beta1, " on outcome [", beta2,
             "==1]", sep = ""), "Multiplicative scale", "RERI", "AP", "SI"), Estimates = c(OR00,
             OR01, OR10, OR11, OR01, OR_X1, OR10, OR_A1, OR_M, RERI, AP, SI), CI.ll = c(NA,
@@ -185,7 +185,7 @@ ei.mover = function(model, coef = c(2, 3), CI.level = 0.95, type = "e") {
 
         out = data.frame(Measures = c("OR00", "OR01", "OR10", "OR11", paste("OR(",
             beta2, " on outcome [", beta1, "==0]", sep = ""), paste("OR(", beta2,
-            " on outcome [", beta1, "==0]", sep = ""), "Multiplicative scale",
+            " on outcome [", beta1, "==1]", sep = ""), "Multiplicative scale",
             "RERI"), Estimates = c(OR00, OR01, OR10, OR11, OR01, OR_X1, OR_M, RERI),
             CI.ll = c(NA, l2, l1, l3, l2, CI.ll_OR_X1, CI.ll_OR_M, L), CI.ul = c(NA,
                 u2, u1, u3, u2, CI.ul_OR_X1, CI.ul_OR_M, U))
