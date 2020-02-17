@@ -1,0 +1,15 @@
+Package: em.interaction
+Type: Package
+Title: An R package for full reporting of effect modification and interaction
+Version: 0.1.0
+Author: Babatunde Alli, Sreenath Madathil, Belinda Nicolau
+Maintainer: Babatunde Alli <babatunde.alli@mail.mcgill.ca>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+    boot,
+    msm
+RoxygenNote: 7.0.2
