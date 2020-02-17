@@ -28,9 +28,9 @@ ei.bstrap = function(dat) {
     RERI = bstrap$t0[1]
     AP = bstrap$t0[2]
     SI = bstrap$t0[3]
-    RERI.CI = quantile(bstrap$t[, 1], probs = c(0.025, 0.975), type = 8)
-    AP.CI = quantile(bstrap$t[, 2], probs = c(0.025, 0.975), type = 8)
-    SI.CI = quantile(bstrap$t[, 3], probs = c(0.025, 0.975), type = 8)
+    RERI.CI = quantile(bstrap$t[, 1], probs = c(0.025, 0.975), type = 9)
+    AP.CI = quantile(bstrap$t[, 2], probs = c(0.025, 0.975), type = 9)
+    SI.CI = quantile(bstrap$t[, 3], probs = c(0.025, 0.975), type = 9)
 
     out = data.frame(Measures = c("RERI", "AP", "SI"),
                      Estimates = c(RERI, AP, SI),
