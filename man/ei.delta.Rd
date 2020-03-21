@@ -22,5 +22,5 @@ A dataframe containing all the neccessary estimates required to full report effe
 Computes confidence intervals for interaction measures using the delta method by Hosmer and Lemeshow
 }
 \examples{
-ei.delta(model.glm, coef = c(2,3), CI.level = 0.95, type = "i")
+ei.delta(model.glm, coef = c(2,3), CI.level = 0.95, type = 'i')
 }

@@ -22,5 +22,5 @@ A dataframe containing all the neccessary estimates required to full report effe
 Computes confidence intervals for interaction measures using the variance recovery method by Zou (2018)
 }
 \examples{
-ei.mover(model.glm, coef = c(2,3), CI.level = 0.95, type = "i")
+ei.mover(model.glm, coef = c(2,3), CI.level = 0.95, type = 'i')
 }
