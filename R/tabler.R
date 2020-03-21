@@ -7,16 +7,16 @@ tabler = function(d, beta1, beta2, type = NULL) {
     E1.present = paste(beta1, "present", sep = " ")
     E2.absent = paste(beta2, "absent", sep = " ")
     E2.present = paste(beta2, "present", sep = " ")
-    WithinStrataEffect1 = paste("Effect of", beta2, "within the strata of",
-        beta1, sep = " ")
-    WithinStrataEffect2 = paste("Effect of", beta1, "within the strata of",
-        beta2, sep = " ")
-
+    WithinStrataEffect1 = paste("Effect of", beta2, "within the strata of", beta1, 
+        sep = " ")
+    WithinStrataEffect2 = paste("Effect of", beta1, "within the strata of", beta2, 
+        sep = " ")
+    
     if (type == "e") {
-        t = hux(c1 = c(NA, NA, E1.absent, E1.present, "Multiplicative scale",
-            "RERI"), c2 = c(E2.absent, "OR [95% CI]", NA, NA, NA, NA), c3 = c(E2.present,
-            "OR [95% CI]", NA, NA, NA, NA), c4 = c(WithinStrataEffect1, "OR [95% CI]",
-            NA, NA, NA, NA))
+        t = hux(c1 = c(NA, NA, E1.absent, E1.present, "Multiplicative scale", "RERI"), 
+            c2 = c(E2.absent, "OR [95% CI]", NA, NA, NA, NA), c3 = c(E2.present, 
+                "OR [95% CI]", NA, NA, NA, NA), c4 = c(WithinStrataEffect1, "OR [95% CI]", 
+                NA, NA, NA, NA))
         t[3, 2] = paste("1", "[Reference]", sep = " ")
         t[3, 3] = paste(d[2, 2], " [", d[2, 3], ", ", d[2, 4], "]", sep = "")
         t[3, 4] = paste(d[5, 2], " [", d[5, 3], ", ", d[5, 4], "]", sep = "")
@@ -25,16 +25,15 @@ tabler = function(d, beta1, beta2, type = NULL) {
         t[4, 4] = paste(d[6, 2], " [", d[6, 3], ", ", d[6, 4], "]", sep = "")
         t[5, 2] = paste(d[7, 2], " [", d[7, 3], ", ", d[7, 4], "]", sep = "")
         t[6, 2] = paste(d[8, 2], " [", d[8, 3], ", ", d[8, 4], "]", sep = "")
-
-        caption(t) = paste("Modification of the effect of", beta2, "by", beta1,
-            sep = " ")
-
+        
+        caption(t) = paste("Modification of the effect of", beta2, "by", beta1, sep = " ")
+        
     } else {
-        t = hux(c1 = c(NA, NA, E1.absent, E1.present, WithinStrataEffect2,
-            "Multiplicative scale", "RERI", "AP", "SI"), c2 = c(E2.absent,
-            "OR [95% CI]", NA, NA, NA, NA, NA, NA, NA), c3 = c(E2.present,
-            "OR [95% CI]", NA, NA, NA, NA, NA, NA, NA), c4 = c(WithinStrataEffect1,
-            "OR [95% CI]", NA, NA, NA, NA, NA, NA, NA))
+        t = hux(c1 = c(NA, NA, E1.absent, E1.present, WithinStrataEffect2, "Multiplicative scale", 
+            "RERI", "AP", "SI"), c2 = c(E2.absent, "OR [95% CI]", NA, NA, NA, NA, 
+            NA, NA, NA), c3 = c(E2.present, "OR [95% CI]", NA, NA, NA, NA, NA, NA, 
+            NA), c4 = c(WithinStrataEffect1, "OR [95% CI]", NA, NA, NA, NA, NA, NA, 
+            NA))
         t[3, 2] = paste("1", "[Reference]", sep = " ")
         t[3, 3] = paste(d[2, 2], " [", d[2, 3], ", ", d[2, 4], "]", sep = "")
         t[3, 4] = paste(d[5, 2], " [", d[5, 3], ", ", d[5, 4], "]", sep = "")
@@ -51,8 +50,8 @@ tabler = function(d, beta1, beta2, type = NULL) {
     }
     right_padding(t) = 10
     left_padding(t) = 10
-
-
+    
+    
     quick_docx(t, file = "interaction_table.docx")
     return(t)
 }

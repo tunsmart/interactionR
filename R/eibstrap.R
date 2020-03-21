@@ -32,9 +32,9 @@ ei.bstrap = function(dat) {
     AP.CI = quantile(bstrap$t[, 2], probs = c(0.025, 0.975), type = 9)
     SI.CI = quantile(bstrap$t[, 3], probs = c(0.025, 0.975), type = 9)
     
-    out = data.frame(Measures = c("RERI", "AP", "SI"), Estimates = c(RERI, 
-        AP, SI), CI.LL = c(RERI.CI[1], AP.CI[1], SI.CI[1]), CI.UL = c(RERI.CI[2], 
-        AP.CI[2], SI.CI[2]))
+    out = data.frame(Measures = c("RERI", "AP", "SI"), Estimates = c(RERI, AP, SI), 
+        CI.LL = c(RERI.CI[1], AP.CI[1], SI.CI[1]), CI.UL = c(RERI.CI[2], AP.CI[2], 
+            SI.CI[2]))
     rownames(out) = NULL
     
     return(out)
