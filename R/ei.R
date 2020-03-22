@@ -202,7 +202,6 @@ ei = function(model, coef = c(2, 3), ci.type = "delta", ci.level = 0.95, type = 
         # Estimates measures of effect modification on the additive scale and calculates
         # their CI and p-value with the delta method implemented in the msm package
 
-        require(msm)
         # RERI, CI and p-value
         RERI = OR11 - OR01 - OR10 + 1
         se_RERI = deltamethod(g = ~exp(x1 + x2 + x3) - exp(x1) - exp(x2) + 1, mean = c(b1,
