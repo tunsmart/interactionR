@@ -18,3 +18,5 @@ Imports:
 RoxygenNote: 7.0.2
 URL: https://github.com/epi-zen/em.interaction
 BugReports: https://github.com/epi-zen/em.interaction/issues
+Suggests: 
+    testthat
