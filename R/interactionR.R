@@ -1,74 +1,116 @@
+#' Full reporting of effect modification and interaction analysis
+#'
+#'
+#' For two binary exposures included in a logistic regression model as an interaction term for a binary outcome, \code{interactionR} returns a publication-ready table that include all effect measures neccessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012). Estimation of confidence intervals (CI) for measures of additive interaction is based on the delta method described by Hosmer and Lemeshow (1992) or the variance recovery 'mover' method described by Zou (2008).
+#'
+#'
+#'
+#'
+#' @param  model A fitted model object of class glm, clogit or coxph
+#'
+#' @param  exposure_names A character vector of two named binary exposure variables present in the fitted model: the default is an empty vector. If effect modification is being assessed, to get the right orientation of the table output, the first variable should be the putative effect modifier, the second, the main exposure. If it's interaction, the order doesn't matter.
+#'
+#' @param  ci.type A character string ("delta" or "mover") specifying the method to use for the estimation of CI for the measures of additive interaction. Default is "delta".
+#'
+#' @param  ci.level Magnitude of the returned CI level. Default is 0.95
+#'
+#' @param  em   TRUE (the default), for effect modification assessment. FALSE, for interaction.
+#'
+#' @param  recode If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.
+#'
+#' @return  Depending on if em was assessed or interaction, the function saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory(see \url{https://doi.org/10.1093/ije/dyr218}).
+#' It also returns an object of class "list" that includes:
+#'  \itemize{
+#'   \item \code{Table} An object of class huxtable corresponding to the table saved in the working directory @seealso \code{\link[huxtable]{huxtable}}
+#'   \item \code{dframe} A dataframe listing all the effect measures used to populate the table
+#' }
+#'
+#'
+#' @examples
+#' library (em.interaction)
+#' data (OCdata) ## Case-control data from Rothman and Keller (1972) evaluating the joint effect of alcohol and smoking
+#' ## on oral cancer risk is included in the package (cited in Hosmer and Lemeshow (1992) and Zou (2008))
+#'
+#' ## fit the interaction model
+#' model.glm <- glm(oc ~ alc*smk, family = binomial(link = "logit"), data = OCdata)
+#'
+#' ## Then pass the fitted model to the function
+#' interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
+#'
+#'
+
+
 #' @export
 #' @importFrom msm deltamethod
-emm = function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95, 
+interactionR = function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95,
     em = T, recode = F) {
-    
+
     if (invalid(model)) {
         stop("The 'model' argument must be a regression model object fit with glm() and link = 'logit', coxph() or clogit()")
     } else if (class(exposure_names) != "character") {
         stop("Argument 'exposure_names' requires a character vector of the names of the two exposure variables ")
     }
-    
+
     # Estimates the critical value from the supplied CI.level for
     # subsequent CI estimations
     alpha = 1 - ci.level
     z = qnorm(1 - alpha/2)
-    
+
     # Extracts the names for the main exposure (beta1), the effect modifier
     # (beta2) and their joint efffect (beta1 + beta2 + beta1:beta2)
     beta1 = exposure_names[1]
     beta2 = exposure_names[2]
     beta3 = paste(beta1, beta2, sep = ":")
-    
+
     varNames = c(beta1, beta2, beta3)
-    
+
     # estimating coefficients to check for any preventive exposures
     b1 = coef(model)[beta1]
     b2 = coef(model)[beta2]
     b3 = coef(model)[beta3]
-    
-    
+
+
     # check if any exposure is preventive
     if (preventive(OR10 = exp(b1), OR01 = exp(b2))) {
-        if (!recode) 
+        if (!recode)
             stop("Error: At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
         if (recode) {
             # find stratum with lowest overall risk, conditional on covariates
-            temp = data.frame(cat = c("OR10", "OR01", "OR11"), value = c(exp(b1), 
+            temp = data.frame(cat = c("OR10", "OR01", "OR11"), value = c(exp(b1),
                 exp(b2), exp(b1 + b2 + b3)))
             refcat = temp$cat[which.min(temp$value)]  # get category's name
-            
+
             # extract first 'subscript' number
             E1.ref = substr(refcat, 3, 3)
             # extract second 'subscript' number
             E2.ref = substr(refcat, 4, 4)
-            
+
             # recode each exposure based on new reference category
             dat = model$data
             dat[[beta1]] = ifelse(dat[[beta1]] == E1.ref, 0, 1)
             dat[[beta2]] = ifelse(dat[[beta2]] == E2.ref, 0, 1)
-            
+
             # inform the user
-            warning("Recoding exposures; new reference category for ", 
+            warning("Recoding exposures; new reference category for ",
                 beta1, " is ", E1.ref, " and for ", beta2, " is ", E2.ref)
-            
+
             # refit model with user's original call but recoded data
             model = update(model, . ~ ., data = dat)
-            
+
             # get new coefficients and ORs
             b1 = coef(model)[beta1]
             b2 = coef(model)[beta2]
             b3 = coef(model)[beta3]
-            
+
         }
     }
-    
+
     se_vec = summary(model)$coefficients[, 2]  #extracts the SE vector for the coefficients
     # from the model
     v1 = se_vec[beta1]^2
     v2 = se_vec[beta2]^2
     v3 = se_vec[beta3]^2
-    
+
     ### Extracts the variance-covariance matrix from the model### for use in
     ### the delta method CI estimation for RERI and AP###
     v_cov = vcov(model)
@@ -80,10 +122,10 @@ emm = function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95,
     v12 = v1 + v2 + (2 * (cov12))
     v13 = v1 + v3 + (2 * (cov13))
     v23 = v2 + v3 + (2 * (cov23))
-    
-    
+
+
     # Estimates individual and joint effects ORs (with CI) from the model
-    
+
     OR00 = 1  #reference OR
     OR10 = as.numeric(exp(b1))
     l1 = exp(confint.default(model)[beta1, 1])
@@ -94,52 +136,52 @@ emm = function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95,
     OR11 = as.numeric(exp(b1 + b2 + b3))
     l3 = exp(b1 + b2 + b3 - z * sqrt(v123))
     u3 = exp(b1 + b2 + b3 + z * sqrt(v123))
-    
+
     ### Estimates the effect (and CI) of A on D (X==1) ###
     OR_X1 = as.numeric(exp(b2 + b3))  # OR of A on D (X==1)
     CI.ll_OR_X1 = exp(b2 + b3 - z * sqrt(v23))
     CI.ul_OR_X1 = exp(b2 + b3 + z * sqrt(v23))
-    
-    
+
+
     ### Estimates the effect (and CI) of X on D (A==1) ###
     OR_A1 = as.numeric(exp(b1 + b3))  # OR of X on D (A==1)
     CI.ll_OR_A1 = exp(b1 + b3 - z * sqrt(v13))
     CI.ul_OR_A1 = exp(b1 + b3 + z * sqrt(v13))
-    
+
     # Effect modification on the multiplicative scale and CI
     OR_M = as.numeric(exp(b3))
     CI.ll_OR_M = exp(confint.default(model)[beta3, 1])
     CI.ul_OR_M = exp(confint.default(model)[beta3, 2])
-    
+
     if (ci.type == "mover") {
         # Estimates measures of effect modification on the additive scale and
         # calculates their CI with the 'MOVER' method (Zou (2018)
         # https://doi.org/10.1093/aje/kwn104)
-        
+
         # RERI, CI and p-value
         RERI = OR11 - OR01 - OR10 + 1
         r12 = (v1 + cov12 + cov13)/sqrt(v1 * v123)
         r13 = (cov12 + v2 + cov23)/sqrt(v2 * v123)
         r23 = cov12/sqrt(v1 * v2)
-        
+
         p1 = (OR11 - l3)^2 + (u1 - OR10)^2 + (u2 - OR01)^2
         p2 = 2 * r12 * (OR11 - l3) * (u1 - OR10)
         p3 = 2 * r13 * (OR11 - l3) * (u2 - OR01)
         p4 = 2 * r23 * (u1 - OR10) * (u2 - OR01)
         p5 = p1 - p2 - p3 + p4
         p6 = p5^0.5
-        
+
         L = 1 + OR11 - OR10 - OR01 - p6
-        
+
         k1 = (u3 - OR11)^2 + (OR10 - l1)^2 + (OR01 - l2)^2
         k2 = 2 * r12 * (u3 - OR11) * (OR10 - l1)
         k3 = 2 * r13 * (u3 - OR11) * (OR01 - l2)
         k4 = 2 * r23 * (OR10 - l1) * (OR01 - l2)
         k5 = (k1 - k2 - k3 + k4)^0.5
-        
+
         U = 1 + OR11 - OR10 - OR01 + k5
-        
-        
+
+
         # AP, CI and p-value
         theta1 = 1/exp(b1 + b2 + b3)
         theta2 = 1/exp(b2 + b3)
@@ -148,57 +190,57 @@ emm = function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95,
         APr12 = (cov12 + cov13 + v2 + (2 * cov23) + v3)/sqrt(v23 * v123)
         APr13 = (v1 + cov12 + (2 * cov13) + cov23 + v3)/sqrt(v13 * v123)
         APr23 = (cov12 + cov23 + cov13 + v3)/sqrt(v23 * v13)
-        
+
         APl1 = theta1 * exp(-z * sqrt(v123))
         APu1 = theta1 * exp(z * sqrt(v123))
-        
+
         APl2 = theta2 * exp(-z * sqrt(v23))
         APu2 = theta2 * exp(z * sqrt(v23))
-        
+
         APl3 = theta3 * exp(-z * sqrt(v13))
         APu3 = theta3 * exp(z * sqrt(v13))
-        
+
         APp1 = (theta1 - APl1)^2 + (APu2 - theta2)^2 + (APu3 - theta3)^2
         APp2 = 2 * APr12 * (theta1 - APl1) * (APu2 - theta2)
         APp3 = 2 * APr13 * (theta1 - APl1) * (APu3 - theta3)
         APp4 = 2 * APr23 * (APu2 - theta2) * (APu3 - theta3)
         APp5 = APp1 - APp2 - APp3 + APp4
         APp6 = APp5^0.5
-        
+
         APL = 1 + theta1 - theta2 - theta3 - APp6
-        
+
         APk1 = (APu1 - theta1)^2 + (theta2 - APl2)^2 + (theta3 - APl3)^2
         APk2 = 2 * APr12 * (APu1 - theta1) * (theta2 - APl2)
         APk3 = 2 * APr13 * (APu1 - theta1) * (theta3 - APl3)
         APk4 = 2 * APr23 * (theta2 - APl2) * (theta3 - APl3)
         APk5 = (APk1 - APk2 - APk3 + APk4)^0.5
-        
+
         APU = 1 + theta1 - theta2 - theta3 + APk5
-        
-        
+
+
         # SI, CI and p-value
         SItheta1 = log((exp(b1 + b2 + b3) - 1))
         SItheta2 = log((exp(b1) + exp(b2) - 2))
         lnSI = SItheta1 - SItheta2
         SI = exp(lnSI)
-        
+
         vSItheta1 = (exp(b1 + b2 + b3)/(exp(b1 + b2 + b3) - 1))^2 * v123
-        vSItheta2 = ((exp(2 * b1) * v1) + (exp(2 * b2) * v2) + (2 * exp(b1 + 
+        vSItheta2 = ((exp(2 * b1) * v1) + (exp(2 * b2) * v2) + (2 * exp(b1 +
             b2) * cov12))/(exp(b1) + exp(b2) - 2)^2
         SIl1 = SItheta1 - z * sqrt(vSItheta1)
         SIu1 = SItheta1 + z * sqrt(vSItheta1)
         SIl2 = SItheta2 - z * sqrt(vSItheta2)
         SIu2 = SItheta2 + z * sqrt(vSItheta2)
-        
-        SIr = ((exp(b1) * (v1 + cov12 + cov13)) + (exp(b2) * (cov12 + v2 + 
-            cov23)))/sqrt(v123 * ((exp(2 * b1) * v1) + (exp(2 * b2) * v2) + 
+
+        SIr = ((exp(b1) * (v1 + cov12 + cov13)) + (exp(b2) * (cov12 + v2 +
+            cov23)))/sqrt(v123 * ((exp(2 * b1) * v1) + (exp(2 * b2) * v2) +
             (2 * exp(b1 + b2) * cov12)))
-        
-        lnSIL = (SItheta1 + (-SItheta2)) - sqrt((SItheta1 - SIl1)^2 + ((-SItheta2) - 
-            (-SIl2))^2 + (2 * SIr * (SItheta1 - SIl1) * ((-SItheta2) - 
+
+        lnSIL = (SItheta1 + (-SItheta2)) - sqrt((SItheta1 - SIl1)^2 + ((-SItheta2) -
+            (-SIl2))^2 + (2 * SIr * (SItheta1 - SIl1) * ((-SItheta2) -
             (-SIl2))))
-        lnSIU = (SItheta1 + (-SItheta2)) + sqrt((SIu1 - SItheta1)^2 + ((-SIu2) - 
-            (-SItheta2))^2 + (2 * SIr * (SIu1 - SItheta1) * ((-SIu2) - 
+        lnSIU = (SItheta1 + (-SItheta2)) + sqrt((SIu1 - SItheta1)^2 + ((-SIu2) -
+            (-SItheta2))^2 + (2 * SIr * (SIu1 - SItheta1) * ((-SIu2) -
             (-SItheta2))))
         SIL = exp(lnSIL)
         SIU = exp(lnSIU)
@@ -206,62 +248,69 @@ emm = function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95,
         # Estimates measures of effect modification on the additive scale and
         # calculates their CI and p-value with the delta method implemented in
         # the msm package
-        
+
         # RERI, CI and p-value
         RERI = OR11 - OR01 - OR10 + 1
-        se_RERI = deltamethod(g = ~exp(x1 + x2 + x3) - exp(x1) - exp(x2) + 
+        se_RERI = deltamethod(g = ~exp(x1 + x2 + x3) - exp(x1) - exp(x2) +
             1, mean = c(b1, b2, b3), cov = v_cov1)
         L = RERI - z * se_RERI
         U = RERI + z * se_RERI
-        
-        
+
+
         # AP, CI and p-value
         AP = RERI/OR11
-        se_AP = deltamethod(g = ~(exp(x1 + x2 + x3) - exp(x1) - exp(x2) + 
+        se_AP = deltamethod(g = ~(exp(x1 + x2 + x3) - exp(x1) - exp(x2) +
             1)/exp(x1 + x2 + x3), mean = c(b1, b2, b3), cov = v_cov1)
         APL = AP - z * se_AP
         APU = AP + z * se_AP
-        
-        
-        
+
+
+
         # SI, CI and p-value
-        lnSI = log((exp(b1 + b2 + b3) - 1)) - log((exp(b1) + exp(b2) - 
+        lnSI = log((exp(b1 + b2 + b3) - 1)) - log((exp(b1) + exp(b2) -
             2))
         SI = exp(lnSI)
-        se_SI = deltamethod(g = ~log((exp(x1 + x2 + x3) - 1)) - log((exp(x1) + 
+        se_SI = deltamethod(g = ~log((exp(x1 + x2 + x3) - 1)) - log((exp(x1) +
             exp(x2) - 2)), mean = c(b1, b2, b3), cov = v_cov1)
-        
+
         SIL = exp(lnSI - z * se_SI)
         SIU = exp(lnSI + z * se_SI)
-        
+
     } else {
         stop("Argument 'ci.type' must be 'delta' or 'mover' ")
     }
-    
-    d = data.frame(Measures = c("OR00", "OR01", "OR10", "OR11", paste("OR(", 
-        beta2, " on outcome [", beta1, "==0]", sep = ""), paste("OR(", 
-        beta2, " on outcome [", beta1, "==1]", sep = ""), "Multiplicative scale", 
-        "RERI"), Estimates = c(OR00, OR01, OR10, OR11, OR01, OR_X1, OR_M, 
-        RERI), CI.ll = c(NA, l2, l1, l3, l2, CI.ll_OR_X1, CI.ll_OR_M, L), 
+
+    d = data.frame(Measures = c("OR00", "OR01", "OR10", "OR11", paste("OR(",
+        beta2, " on outcome [", beta1, "==0]", sep = ""), paste("OR(",
+        beta2, " on outcome [", beta1, "==1]", sep = ""), "Multiplicative scale",
+        "RERI"), Estimates = c(OR00, OR01, OR10, OR11, OR01, OR_X1, OR_M,
+        RERI), CI.ll = c(NA, l2, l1, l3, l2, CI.ll_OR_X1, CI.ll_OR_M, L),
         CI.ul = c(NA, u2, u1, u3, u2, CI.ul_OR_X1, CI.ul_OR_M, U))
     rownames(d) = NULL
-    
-    
-    
+
+
+
     if (!em) {
-        d = data.frame(Measures = c("OR00", "OR01", "OR10", "OR11", paste("OR(", 
-            beta2, " on outcome [", beta1, "==0]", sep = ""), paste("OR(", 
-            beta2, " on outcome [", beta1, "==1]", sep = ""), paste("OR(", 
-            beta1, " on outcome [", beta2, "==0]", sep = ""), paste("OR(", 
-            beta1, " on outcome [", beta2, "==1]", sep = ""), "Multiplicative scale", 
-            "RERI", "AP", "SI"), Estimates = c(OR00, OR01, OR10, OR11, 
-            OR01, OR_X1, OR10, OR_A1, OR_M, RERI, AP, SI), CI.ll = c(NA, 
-            l2, l1, l3, l2, CI.ll_OR_X1, l1, CI.ll_OR_A1, CI.ll_OR_M, L, 
-            APL, SIL), CI.ul = c(NA, u2, u1, u3, u2, CI.ul_OR_X1, u1, CI.ul_OR_A1, 
+        d = data.frame(Measures = c("OR00", "OR01", "OR10", "OR11", paste("OR(",
+            beta2, " on outcome [", beta1, "==0]", sep = ""), paste("OR(",
+            beta2, " on outcome [", beta1, "==1]", sep = ""), paste("OR(",
+            beta1, " on outcome [", beta2, "==0]", sep = ""), paste("OR(",
+            beta1, " on outcome [", beta2, "==1]", sep = ""), "Multiplicative scale",
+            "RERI", "AP", "SI"), Estimates = c(OR00, OR01, OR10, OR11,
+            OR01, OR_X1, OR10, OR_A1, OR_M, RERI, AP, SI), CI.ll = c(NA,
+            l2, l1, l3, l2, CI.ll_OR_X1, l1, CI.ll_OR_A1, CI.ll_OR_M, L,
+            APL, SIL), CI.ul = c(NA, u2, u1, u3, u2, CI.ul_OR_X1, u1, CI.ul_OR_A1,
             CI.ul_OR_M, U, APU, SIU))
         rownames(d) = NULL
     }
-    
-    tabler(d = d, beta1 = beta1, beta2 = beta2, em = em)
-    
+
+    tab = tabler(d = d, beta1 = beta1, beta2 = beta2, em = em)
+    print_screen(tab)
+    print(paste("The file 'interaction_table.docx' has been saved to", getwd(), sep = " "))
+
+    out = list(Table = tab, dframe = d)
+    invisible(out)
+
+
+
 }
