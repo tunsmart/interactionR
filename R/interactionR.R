@@ -312,5 +312,4 @@ interactionR = function(model, exposure_names = c(), ci.type = "delta", ci.level
     invisible(out)
 
 
-
 }
