@@ -29,7 +29,7 @@ interactionR(
 \value{
 Depending on if em was assessed or interaction, the function saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory(see \url{https://doi.org/10.1093/ije/dyr218}).
 It also returns an object of class "list" that includes:
-#' \itemize{
+ \itemize{
   \item \code{Table} An object of class huxtable corresponding to the table saved in the working directory @seealso \code{\link[huxtable]{huxtable}}
   \item \code{dframe} A dataframe listing all the effect measures used to populate the table
 }
