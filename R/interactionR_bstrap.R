@@ -1,8 +1,28 @@
+#' Computes confidence intervals for interaction measures using bootstrapping as described by Assmann et al (1996).
+#'
+#' @param  dat a data frame containing the variables required to estimate the measures of additive interactions in the following order of columns:
+#' \itemize{
+#'   \item \code{1)} the first column should be the outcome variable
+#'   \item \code{2 & 3)} the second and third column should be the two exposures under study
+#'   \item \code{others} the rest of the columns could be the covariates that requires adjustment in the model, if any.
+#' }
+#'
+#'
+#' @return a dataframe containing effect estimates of additive interaction measures with bootstrapped 95% CI limits.
+#'
+#' @examples
+#' data(HDiscdata) # loads the dataset from assmann et al. which is available in the package
+#' head(HDiscdata, 2L) # prints the first two line to confirm the data is in the right format
+#' interactionR_bstrap(HDiscdata)
+#'
+#' @references
+#' Assmann SF, Hosmer DW, Lemeshow S, Mundt KA. Confidence intervals for measures of interaction. Epidemiology 1996:286-90.
+#'
 #' @export
 #' @importFrom boot boot
 interactionR_bstrap = function(dat) {
 
-    foo = function(data, indices) {
+   trio  = function(data, indices) {
         data = data[indices, ]
         m = glm(data[, 1] ~ data[, 2] * data[, 3], family = binomial(link = "logit"),
             data = data)
@@ -18,14 +38,13 @@ interactionR_bstrap = function(dat) {
         OR10 = exp(b1)
         OR01 = exp(b2)
         OR11 = exp(b1 + b2 + b3)
-        # RERI = OR11-OR10-OR01+1
         c(OR11 - OR10 - OR01 + 1, (OR11 - OR10 - OR01 + 1)/OR11, (OR11 -
             1)/(OR10 + OR01 - 2))
 
     }
 
 
-    bstrap = boot(data = dat, foo, R = 1000)
+    bstrap = boot(data = dat, trio, R = 1000)
     RERI = bstrap$t0[1]
     AP = bstrap$t0[2]
     SI = bstrap$t0[3]

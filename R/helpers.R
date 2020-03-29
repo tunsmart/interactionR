@@ -3,7 +3,7 @@ preventive = function(OR10, OR01) {
 }
 
 invalid = function(model) {
-    return(class(model) != "glm" && class(model) != "coxph" && class(model) !=
-        "clogit")
+    cls = c("glm", "coxph", "clogit", "lm")
+    return(class(model) %in% cls)
 }
 

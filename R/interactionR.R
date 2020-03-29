@@ -28,16 +28,27 @@
 #'
 #' @examples
 #' library (interactionR)
-#' data (OCdata) ## Case-control data from Rothman and Keller (1972) evaluating the joint effect of alcohol and smoking
-#' ## on oral cancer risk is included in the package (cited in Hosmer and Lemeshow (1992) and Zou (2008))
+#' data (OCdata) ## Case-control data from Rothman and Keller (1972)
+#' ## evaluating the joint effect of alcohol and smoking
+#' ## on oral cancer risk is included in the package
+#' ##(cited in Hosmer and Lemeshow (1992) and Zou (2008))
 #'
 #' ## fit the interaction model
-#' model.glm <- glm(oc ~ alc*smk, family = binomial(link = "logit"), data = OCdata)
+#' model.glm <- glm(oc ~ alc*smk,
+#'                  family = binomial(link = "logit"),
+#'                  data = OCdata)
 #'
 #' ## Then pass the fitted model to the function
-#' interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
+#' interactionR(model.glm, exposure_names = c("alc", "smk"),
+#'              ci.type = "delta", ci.level = 0.95,
+#'              em = FALSE, recode = FALSE)
 #'
+#'@references
+#'Knol MJ, VanderWeele TJ. Recommendations for presenting analyses of effect modification and interaction. Int J Epidemiol 2012; 41:514-20.
 #'
+#'Hosmer DW, Lemeshow S. Confidence interval estimation of interaction. Epidemiology 1992; 3:452-6.
+#'
+#'Zou GY. On the Estimation of Additive Interaction by Use of the Four-by-two Table and Beyond. American Journal of Epidemiology 2008; 168:212-24.
 
 
 #' @export
@@ -45,8 +56,8 @@
 interactionR = function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95,
     em = T, recode = F) {
 
-    if (invalid(model)) {
-        stop("The 'model' argument must be a regression model object fit with glm() and link = 'logit', coxph() or clogit()")
+    if (!invalid(model)) {
+        stop("The 'model' argument must be a regression model object fit with glm(), coxph() or clogit()")
     } else if (class(exposure_names) != "character") {
         stop("Argument 'exposure_names' requires a character vector of the names of the two exposure variables ")
     }

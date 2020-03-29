@@ -35,5 +35,17 @@ It also returns an object of class "list" that includes:
 Computes confidence intervals for interaction measures using the delta method by Hosmer and Lemeshow
 }
 \examples{
-ei.delta(model.glm, coef = c(2,3), CI.level = 0.95, type = 'i')
+data (OCdata) ## Case-control data from Rothman and Keller (1972)
+## evaluating the joint effect of alcohol and smoking
+## on oral cancer risk is included in the package
+## (cited in Hosmer and Lemeshow (1992) and Zou (2008))
+
+## fit the interaction model
+model.glm <- glm(oc ~ alc*smk,
+                 family = binomial(link = "logit"),
+                 data = OCdata)
+
+## Then pass the fitted model to the function
+interactionR_delta(model.glm, exposure_names = c("alc", "smk"),
+                   ci.level = 0.95, em = FALSE, recode = FALSE)
 }

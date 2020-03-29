@@ -9,7 +9,7 @@ Description: Produces a publication-ready table that includes all
     or interaction analysis. It also estimates confidence interval for 
     the trio of additive interaction measures using the delta method, 
     variance recovery method, or bootstrapping. 
-License: CCBY-4.0
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -23,3 +23,4 @@ URL: https://github.com/epi-zen/interactionR
 BugReports: https://github.com/epi-zen/interactionR/issues
 Suggests: 
     testthat (>= 2.1.0)
+Depends: R (>= 2.10)
