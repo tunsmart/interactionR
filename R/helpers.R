@@ -4,6 +4,6 @@ preventive = function(OR10, OR01) {
 
 invalid = function(model) {
     cls = c("glm", "coxph", "clogit", "lm")
-    return(class(model) %in% cls)
+    return(class(model)[1] %in% cls)
 }
 

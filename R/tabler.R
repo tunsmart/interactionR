@@ -28,6 +28,7 @@ tabler = function(d, beta1, beta2, em = NULL) {
 
         caption(t) = paste("Modification of the effect of", beta2, "by",
             beta1, sep = " ")
+        t = theme_article(t)
 
     } else {
         t = hux(c1 = c(NA, NA, E1.absent, E1.present, WithinStrataEffect2,
@@ -51,6 +52,7 @@ tabler = function(d, beta1, beta2, em = NULL) {
         t[9, 2] = paste(d[12, 2], " [", d[12, 3], ", ", d[12, 4], "]",
             sep = "")
         caption(t) = paste("Interaction of", beta1, "and", beta2, sep = " ")
+        t = theme_article(t)
     }
     right_padding(t) = 10
     left_padding(t) = 10
