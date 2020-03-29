@@ -1,12 +1,13 @@
 Package: interactionR
 Type: Package
-Title: An R package for full reporting of effect modification and interaction
+Title: Full reporting of effect modification and interaction
 Version: 0.1.0
 Author: Babatunde Alli, Sreenath Madathil, Belinda Nicolau
 Maintainer: Babatunde Alli <babatunde.alli@mail.mcgill.ca>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: Produces a publication-ready table that includes all effect estimates neccessary for full reporting effect modification or interaction analysis. 
+    It also estimates confidence interval for the trio of additive interaction measures using 
+    the delta method, variance recovery method, or bootstrapping. 
+License: CCBY-4.0
 Encoding: UTF-8
 LazyData: true
 Imports:

@@ -1,4 +1,4 @@
 library(testthat)
-library(em.interaction)
+library(interactionR)
 
-test_check("em.interaction")
+test_check("interactionR")

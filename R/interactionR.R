@@ -1,7 +1,7 @@
 #' Full reporting of effect modification and interaction analysis
 #'
 #'
-#' For two binary exposures included in a logistic regression model as an interaction term for a binary outcome, \code{interactionR} returns a publication-ready table that include all effect measures neccessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012). Estimation of confidence intervals (CI) for measures of additive interaction is based on the delta method described by Hosmer and Lemeshow (1992) or the variance recovery 'mover' method described by Zou (2008).
+#' For two binary exposures included in a regression model as an interaction term for a binary outcome, \code{interactionR} returns a publication-ready table that include all effect measures neccessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012). Estimation of confidence intervals (CI) for measures of additive interaction is based on the delta method described by Hosmer and Lemeshow (1992) or the variance recovery 'mover' method described by Zou (2008).
 #'
 #'
 #'

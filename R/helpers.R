@@ -3,6 +3,7 @@ preventive = function(OR10, OR01) {
 }
 
 invalid = function(model) {
-    return(model$family$link != "logit" && class(model) != "coxph" && class(model) != 
+    return(class(model) != "glm" && class(model) != "coxph" && class(model) !=
         "clogit")
 }
+
