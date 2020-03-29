@@ -14,23 +14,23 @@ interactionR_mover(
 )
 }
 \arguments{
-\item{model}{A fitted model object of class glm or coxph}
+\item{model}{A fitted model object of class glm, clogit or coxph}
 
-\item{coef}{A vector of two numbers indicating the position of the two
-interaction terms in the model summary. The default is 2 and 3, which
-assumes that the two exposures are listed first before any additional
-covariates}
+\item{exposure_names}{A character vector of two named binary exposure variables present in the fitted model: the default is an empty vector. If effect modification is being assessed, to get the right orientation of the table output, the first variable should be the putative effect modifier, the second, the main exposure. If it's interaction, the order doesn't matter.}
 
-\item{CI.level}{A number indicating the confidence level for the CI
-estimation. The default is 0.95 CI}
+\item{ci.level}{Magnitude of the returned CI level. Default is 0.95}
 
-\item{type}{A letter 'e' for effect modification or 'i' for interaction. The
-default is 'e'.}
+\item{em}{TRUE (the default), for effect modification assessment. FALSE, for interaction.}
+
+\item{recode}{If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.}
 }
 \value{
-A dataframe containing all the neccessary estimates required to full
-  report effect modification or interaction with the CI estimates for
-  interaction measures computed using the variance recovery method
+Depending on if em was assessed or interaction, the function saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory(see \url{https://doi.org/10.1093/ije/dyr218}) and CI of interaction measures estimated with the Zou (2008) method.
+It also returns an object of class "list" that includes:
+ \itemize{
+  \item \code{Table} An object of class huxtable corresponding to the table saved in the working directory @seealso \code{\link[huxtable]{huxtable}}
+  \item \code{dframe} A dataframe listing all the effect measures used to populate the table
+}
 }
 \description{
 Computes confidence intervals for interaction measures using the variance

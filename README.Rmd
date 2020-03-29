@@ -1,0 +1,54 @@
+---
+output: 
+ md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# interactionR
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+Produces a publication-ready table that includes all effect estimates neccessary for full reporting effect modification or interaction analysis. It also estimates confidence interval for the trio of additive interaction measures using the delta method, variance recovery method, or bootstrapping. 
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("epi-zen/interactionR")
+```
+## Example
+
+This is an example showing how to use the main function of the package:
+
+```{r example}
+library(interactionR)
+data (OCdata) ## Case-control data from Rothman and Keller (1972) evaluating the joint effect of alcohol and smoking on oral cancer risk is included in the package (cited in Hosmer and Lemeshow (1992) and Zou (2008))
+
+## fit the interaction model
+model.glm <- glm(oc ~ alc*smk, family = binomial(link = "logit"), data = OCdata)
+
+## Then pass the fitted model to the function which saves a microsoft word publication-ready table to the user's working directory and prints this to the console, if the object is not stored
+interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
+```
+
+If we want, we could use the variance recovery method to estimate the CI for additive interaction measures by specifying "mover" for the 'ci.type' argument
+
+```{r cars}
+interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = F, recode = F)
+```
+
+

@@ -27,7 +27,7 @@
 #'
 #'
 #' @examples
-#' library (em.interaction)
+#' library (interactionR)
 #' data (OCdata) ## Case-control data from Rothman and Keller (1972) evaluating the joint effect of alcohol and smoking
 #' ## on oral cancer risk is included in the package (cited in Hosmer and Lemeshow (1992) and Zou (2008))
 #'
