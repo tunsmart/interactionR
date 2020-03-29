@@ -4,8 +4,6 @@ output:
     variant: markdown_github
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -17,8 +15,7 @@ knitr::opts_chunk$set(
 
 # interactionR
 
-<!-- badges: start -->
-<!-- badges: end -->
+[![Build Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://travis-ci.com/epi-zen/interactionR)
 
 Produces a publication-ready table that includes all effect estimates neccessary for full reporting effect modification or interaction analysis. It also estimates confidence interval for the trio of additive interaction measures using the delta method, variance recovery method, or bootstrapping. 
 

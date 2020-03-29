@@ -1,10 +1,8 @@
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 interactionR
 ============
 
-<!-- badges: start -->
-<!-- badges: end -->
+[![Build
+Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://travis-ci.com/epi-zen/interactionR)
 
 Produces a publication-ready table that includes all effect estimates
 neccessary for full reporting effect modification or interaction
