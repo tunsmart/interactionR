@@ -1,5 +1,40 @@
+#' Publication-ready tables for effect modification and interaction analysis
+#'
+#' Generates a publication-ready table for effect modification and interaction analysis based on Tables 1 and 3 in Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}].
+#' Users can modify the function's output like any huxtable object @seealso \code{\link[huxtable]{huxtable}}. The confidence intervals for additive interaction measures will be as selected from the \code{\link{interactionR}} function
+#'
+#' @param obj An object of class 'interactionR' generated from the main function \code{\link{interactionR}}
+#'
+#' @return  saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory.
+#' It also returns an object of class huxtable corresponding to the saved table.
+#'
+#' @examples
+#' library (interactionR)
+#' data(OCdata)
+#'
+#' ## fit the interaction model
+#' model.glm <- glm(oc ~ alc*smk,
+#'                  family = binomial(link = "logit"),
+#'                  data = OCdata)
+#' ## Then pass the fitted model to the main function
+#' value = interactionR(model.glm, exposure_names = c("alc", "smk"),
+#'              ci.type = "delta", ci.level = 0.95,
+#'              em = FALSE, recode = FALSE)
+#'
+#' ## Use the tabling function to generate a table
+#' interactionR_table(value)
+#'
 #' @import huxtable
-tabler = function(d, beta1, beta2, em = NULL) {
+#' @export
+interactionR_table = function(obj) {
+    if (class(obj) != 'interactionR') {
+        stop("Argument 'obj' must be an object of class 'interactionR',
+             use the interactionR() function to generate such object ")
+    }
+    beta1 = obj$exp_names[1]
+    beta2 = obj$exp_names[2]
+    em = obj$analysis
+    d = obj$dframe
     d$Estimates = as.character(round(d$Estimates, 2))
     d$CI.ll = as.character(round(d$CI.ll, 2))
     d$CI.ul = as.character(round(d$CI.ul, 2))
@@ -59,5 +94,7 @@ tabler = function(d, beta1, beta2, em = NULL) {
 
 
     quick_docx(t, file = "interaction_table.docx")
-    return(t)
+    print_screen(t)
+    print(paste("The file 'interaction_table.docx' has been saved to", getwd(), sep = " "))
+    invisible(t)
 }

@@ -10,12 +10,7 @@
 #'
 #' @param  recode If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.
 #'
-#' @return  Depending on if em was assessed or interaction, the function saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory(see \url{https://doi.org/10.1093/ije/dyr218}) and CI for interaction measures estimated with the delta method.
-#' It also returns an object of class "list" that includes:
-#'  \itemize{
-#'   \item \code{Table} An object of class huxtable corresponding to the table saved in the working directory @seealso \code{\link[huxtable]{huxtable}}
-#'   \item \code{dframe} A dataframe listing all the effect measures used to populate the table
-#' }
+#' @return  a list object of class 'interactionR' that includes a dataframe containing all effect estimates neccesary for full reporting of effect modification or interaction analysis
 #'
 #' @examples
 #' data (OCdata) ## Case-control data from Rothman and Keller (1972)
@@ -203,11 +198,10 @@ interactionR_delta = function(model, exposure_names = c(), ci.level = 0.95, em =
         rownames(d) = NULL
     }
 
-    tab = tabler(d = d, beta1 = beta1, beta2 = beta2, em = em)
-    print_screen(tab)
-    print(paste("The file 'interaction_table.docx' has been saved to", getwd(), sep = " "))
+    ir_delta = list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call)
+    attr(ir_delta, 'class') = 'interactionR'
 
-    out = list(Table = tab, dframe = d)
-    invisible(out)
+
+    invisible(ir_delta)
 }
 

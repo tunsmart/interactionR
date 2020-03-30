@@ -24,7 +24,7 @@ devtools::install_github("epi-zen/interactionR")
 Example
 -------
 
-This is an example showing how to use the main function of the package:
+This is an example showing the main functions of the package:
 
 ``` r
 library(interactionR)
@@ -33,43 +33,28 @@ data (OCdata) ## Case-control data from Rothman and Keller (1972) evaluating the
 ## fit the interaction model
 model.glm <- glm(oc ~ alc*smk, family = binomial(link = "logit"), data = OCdata)
 
-## Then pass the fitted model to the function which saves a microsoft word publication-ready table to the user's working directory and prints this to the console, if the object is not stored
-interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
-#>                          Interaction of alc and smk                          
-#>                      smk absent         smk present        Effect of smk     
-#>                                                            within the        
-#>                                                            strata of alc     
-#>                      OR [95% CI]        OR [95% CI]        OR [95% CI]       
-#>   alc absent         1 [Reference]      2.96 [0.68,        2.96 [0.68,       
-#>                                         12.91]             12.91]            
-#>   alc present        3.33 [0.7,         9.04 [2.64,        2.71 [1, 7.37]    
-#>                      15.86]             30.91]                               
-#>   Effect of alc      3.33 [0.7,         3.05 [1.29,                          
-#>   within the         15.86]             7.18]                                
-#>   strata of smk                                                              
-#>   Multiplicative     0.91 [0.15,                                             
-#>   scale              5.42]                                                   
-#>   RERI               3.74 [-1.84,                                            
-#>                      9.32]                                                   
-#>   AP                 0.41 [-0.07,                                            
-#>                      0.9]                                                    
-#>   SI                 1.87 [0.65,                                             
-#>                      5.42]                                                   
-#> 
-#> Column names: c1, c2, c3, c4
-#> [1] "The file 'interaction_table.docx' has been saved to C:/Users/tunsm/Documents/interactionR"
+## Then pass the fitted model to the function which generates a list object of class 'interactionR'
+value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
 ```
 
-If we want, we could use the variance recovery method to estimate the CI
-for additive interaction measures by specifying “mover” for the
-‘ci.type’ argument
+If we want, we could use the variance recovery method (Zou (2008)) to
+estimate the CI for additive interaction measures by specifying “mover”
+for the ‘ci.type’ argument
 
 ``` r
-interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = F, recode = F)
+value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = F, recode = F)
+```
+
+To generate a publication-ready table, we’ll call the tabling function
+
+``` r
+interactionR_table(value)
 #>                          Interaction of alc and smk                          
+#> -----------------------------------------------------------------------------
 #>                      smk absent         smk present        Effect of smk     
 #>                                                            within the        
 #>                                                            strata of alc     
+#> -----------------------------------------------------------------------------
 #>                      OR [95% CI]        OR [95% CI]        OR [95% CI]       
 #>   alc absent         1 [Reference]      2.96 [0.68,        2.96 [0.68,       
 #>                                         12.91]             12.91]            
@@ -86,7 +71,8 @@ interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.
 #>                      0.81]                                                   
 #>   SI                 1.87 [0.65,                                             
 #>                      5.42]                                                   
+#> -----------------------------------------------------------------------------
 #> 
 #> Column names: c1, c2, c3, c4
-#> [1] "The file 'interaction_table.docx' has been saved to C:/Users/tunsm/Documents/interactionR"
+#> [1] "The file 'interaction_table.docx' has been saved to C:/Users/Public/interactionR"
 ```

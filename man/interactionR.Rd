@@ -27,15 +27,32 @@ interactionR(
 \item{recode}{If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.}
 }
 \value{
-Depending on if em was assessed or interaction, the function saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory(see \url{https://doi.org/10.1093/ije/dyr218}).
-It also returns an object of class "list" that includes:
- \itemize{
-  \item \code{Table} An object of class huxtable corresponding to the table saved in the working directory @seealso \code{\link[huxtable]{huxtable}}
-  \item \code{dframe} A dataframe listing all the effect measures used to populate the table
-}
+a list object of class 'interactionR' that includes a dataframe containing all effect estimates neccesary for full reporting of effect modification or interaction analysis
 }
 \description{
-For two binary exposures included in a regression model as an interaction term for a binary outcome, \code{interactionR} returns a publication-ready table that include all effect measures neccessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012). Estimation of confidence intervals (CI) for measures of additive interaction is based on the delta method described by Hosmer and Lemeshow (1992) or the variance recovery 'mover' method described by Zou (2008).
+For two binary exposures included in a regression model as an interaction term for a binary outcome, \code{interactionR} returns all effect estimates neccessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}]. Estimation of confidence intervals (CI) for measures of additive interaction (RERI, AP, and SI) is based on the delta method described by Hosmer and Lemeshow (1992) [\url{https://doi.org/10.1097/00001648-199209000-00012}] or the variance recovery 'mover' method described by Zou (2008) [\url{https://doi.org/10.1093/aje/kwn104}].
+}
+\details{
+Effect modification is assessed when the effect of an exposure on an outcome differs within the strata of another exposure, while,
+the assessment of the joint effect of two exposures on outcome is Interaction. Both terms are often used interchangeably in the literature.
+
+Despite the widespread analysis of interaction in the literature, the reporting is inadequate. To remedy this, Knol and Vanderweele (2012) proposed a set of recommendations that ensures full reporting for readers to be able to assess all dimensions of interaction.
+The function returns all the effect estimates to fulfill these recommendations.
+
+Also, assessment of interaction is scale dependent: multiplicative or additive. Interaction on a multiplicative scale means that the combined effect of the two exposures is greater (or less) than the product of the individual effects of the two exposures. Interaction on an additive scale means that the combined effect of two exposures is greater (or less) than the sum of the individual effects of two exposures.
+Whereas, interaction on the additive scale is more relevant to public health, most authors merely report on the multiplicative scale. The recommendations mentioned above ensures reporting on both scales.
+
+This function calculates three indices to assess the presence of additive interaction, as defined by Rothman (1998): (1) the relative excess risk due to interaction (RERI), (2) the proportion of disease among those with both exposures that is attributable to their interaction (AP), and (3) the synergy index (SI).
+A RERI of one means no interaction or perfect additivity. A RERI of greater than one means positive interaction or more than additivity. A RERI of less than one means negative interaction or less than additivity. RERI ranges from zero to infinity.
+
+An AP of zero means no interaction or perfect additivity. An AP greater than zero means positive interaction or more than additivity. An AP of less than zero means negative interaction or less than additivity. AP ranges from -1 to +1.
+The synergy index is the ratio of the combined effects and the individual effects. An SI of one means no interaction or perfect additivity. An SI of greater than one means positive interaction or more than additivity. An SI of less than one means negative interaction or less than additivity. SI ranges from zero to infinity.
+
+The delta method as described by Hosmer and Lemeshow (1992) is the most widely used method to calculate the confidence intervals of these interaction measures and the provides this function.
+However, the poor performance of this method for typical use-cases is well documented. Therefore, the function also provides the option for these CIs estimations with the better performing MOVER method introduced by Zou (2008).
+
+Finally, additive interaction as described by Rothman (1998) assumes that the two exposures under study are risk factors for the outcome (i.e. RR > 1). As shown by Knol et al. (2012), If at least one of the two exposures are preventive (i.e. RR < 1) then estimates of RERI and AP becomes invalid (the SI is unaffected), and the exposures need to be recoded to risk factors such that stratum with the lowest risk becomes the new reference category when the two exposures are considered together.
+The function can automatically carry out this recoding.
 }
 \examples{
 library (interactionR)
@@ -54,6 +71,61 @@ interactionR(model.glm, exposure_names = c("alc", "smk"),
              ci.type = "delta", ci.level = 0.95,
              em = FALSE, recode = FALSE)
 
+## Because the delta method was selected, the returned CI for the trio
+## of interaction measures is as reported in page 455 of Hosmer and Lemeshow (1992) for this dataset
+
+## To get CIs using the variance recovery method, set the 'ci.type' to "mover"
+interactionR(model.glm, exposure_names = c("alc", "smk"),
+             ci.type = "mover", ci.level = 0.95,
+             em = FALSE, recode = FALSE)
+## Now the CI returned for RERI is as Figure 4 in Zou (2008)
+
+## To demonstrate the recoding feature of the function
+## We simulate a dataset with three binary variables: one outcome and two preventive exposures
+
+## Generate exposure variables
+n=2000
+set.seed(750)
+exp1 = rbinom(n, size=1, p=0.2)
+set.seed(520)
+exp2 = rbinom(n, size=1, p=0.6)
+
+## Make at least one of the exposures preventive for the outcome
+b0 =log(1)
+bexp1 =log(0.4)
+bexp2 =log(1.1)
+bexp1exp2 =log(0.75)
+
+## Generate outcome
+ppred = b0 + bexp1*exp1 + bexp2*exp2 + bexp1exp2*exp1*exp2
+p = exp(ppred) / (1 +exp(ppred))
+set.seed(30)
+outcome =rbinom(n, size=1, p=p)
+
+## Create dataframe
+d = data.frame(outcome, exp1, exp2)
+
+## Fit a logistic regression model with the data
+model.prev =glm(outcome ~ exp1*exp2, family=binomial(link="logit"), data=d)
+
+## With this model, calling the function with the default FALSE parameter for
+## the 'recode' argument returns an error
+## And informs the user to set 'recode' to TRUE if they want to automatically recode the variables
+\dontrun{interactionR(model.prev, exposure_names = c("exp1", "exp2"),
+             ci.type = "delta", ci.level = 0.95,
+             em = FALSE, recode = FALSE)}
+
+## Set to TRUE, the function recodes the data and generate estimates
+## for additive interaction measures with the new data the new data
+## can be examined in the returned list object by the function
+
+interactionR(model.prev, exposure_names = c("exp1", "exp2"),
+             ci.type = "delta", ci.level = 0.95,
+             em = FALSE, recode = TRUE)
+
+
+
+
 }
 \references{
 Knol MJ, VanderWeele TJ. Recommendations for presenting analyses of effect modification and interaction. Int J Epidemiol 2012; 41:514-20.
@@ -61,4 +133,8 @@ Knol MJ, VanderWeele TJ. Recommendations for presenting analyses of effect modif
 Hosmer DW, Lemeshow S. Confidence interval estimation of interaction. Epidemiology 1992; 3:452-6.
 
 Zou GY. On the Estimation of Additive Interaction by Use of the Four-by-two Table and Beyond. American Journal of Epidemiology 2008; 168:212-24.
+
+Rothman K, Greenland S (1998). Modern Epidemiology. Lippincott - Raven Philadelphia, USA.
+
+Knol, M.J., VanderWeele, T.J., Groenwold, R.H.H. et al. Estimating measures of interaction on an additive scale for preventive exposures. Eur J Epidemiol 26, 433–438 (2011). https://doi.org/10.1007/s10654-011-9554-9
 }

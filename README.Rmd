@@ -29,23 +29,30 @@ devtools::install_github("epi-zen/interactionR")
 ```
 ## Example
 
-This is an example showing how to use the main function of the package:
+This is an example showing the main functions of the package:
 
-```{r example}
+```{r example1}
 library(interactionR)
 data (OCdata) ## Case-control data from Rothman and Keller (1972) evaluating the joint effect of alcohol and smoking on oral cancer risk is included in the package (cited in Hosmer and Lemeshow (1992) and Zou (2008))
 
 ## fit the interaction model
 model.glm <- glm(oc ~ alc*smk, family = binomial(link = "logit"), data = OCdata)
 
-## Then pass the fitted model to the function which saves a microsoft word publication-ready table to the user's working directory and prints this to the console, if the object is not stored
-interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
+## Then pass the fitted model to the function which generates a list object of class 'interactionR'
+value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
 ```
 
-If we want, we could use the variance recovery method to estimate the CI for additive interaction measures by specifying "mover" for the 'ci.type' argument
+If we want, we could use the variance recovery method (Zou (2008)) to estimate the CI for additive interaction measures by specifying "mover" for the 'ci.type' argument
 
-```{r cars}
-interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = F, recode = F)
+```{r example2}
+value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = F, recode = F)
 ```
 
+
+To generate a publication-ready table, we'll call the tabling function
+
+```{r example3}
+interactionR_table(value)
+
+```
 
