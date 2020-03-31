@@ -1,4 +1,4 @@
 utils::globalVariables(c(
   "stats", "binomial", "coef", "confint.default", "glm",
-  "pnorm", "qnorm", "quantile", "update", "vcov"
+  "pnorm", "qnorm", "quantile", "update", "vcov", "askYesNo"
 ))
