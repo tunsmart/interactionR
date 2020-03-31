@@ -7,6 +7,7 @@
 #'   \item \code{others} the rest of the columns could be the covariates that requires adjustment in the model, if any.
 #' }
 #'
+#' @param seed The random seed to use for generating the bootstrap samples for confidence intervals (for reproducibility). Default is 5000, but can be set to any number.
 #'
 #' @return a dataframe containing effect estimates of additive interaction measures with bootstrapped 95% CI limits.
 #'
@@ -20,7 +21,7 @@
 #'
 #' @export
 #' @importFrom boot boot
-interactionR_bstrap = function(dat) {
+interactionR_bstrap = function(dat, seed = 5000) {
 
    trio  = function(data, indices) {
         data = data[indices, ]
@@ -43,7 +44,7 @@ interactionR_bstrap = function(dat) {
 
     }
 
-
+    set.seed(seed)
     bstrap = boot(data = dat, trio, R = 1000)
     RERI = bstrap$t0[1]
     AP = bstrap$t0[2]
@@ -55,6 +56,7 @@ interactionR_bstrap = function(dat) {
     out = data.frame(Measures = c("RERI", "AP", "SI"), Estimates = c(RERI,
         AP, SI), CI.LL = c(RERI.CI[1], AP.CI[1], SI.CI[1]), CI.UL = c(RERI.CI[2],
         AP.CI[2], SI.CI[2]))
+
     rownames(out) = NULL
 
     return(out)

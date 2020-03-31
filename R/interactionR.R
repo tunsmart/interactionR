@@ -175,18 +175,18 @@ interactionR = function(model, exposure_names = c(), ci.type = "delta", ci.level
             if (class(model$data) == 'environment') {
                 stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm(), clogit(), or coxph() call")
             }
-            dat = model$data
+            dat.ir = model$data
 
             # recode each exposure based on new reference category
-            dat[[beta1]] = ifelse(dat[[beta1]] == E1.ref, 0, 1)
-            dat[[beta2]] = ifelse(dat[[beta2]] == E2.ref, 0, 1)
+            dat.ir[[beta1]] = ifelse(dat.ir[[beta1]] == E1.ref, 0, 1)
+            dat.ir[[beta2]] = ifelse(dat.ir[[beta2]] == E2.ref, 0, 1)
 
             # inform the user
             warning("Recoding exposures; new reference category for ",
                 beta1, " is ", E1.ref, " and for ", beta2, " is ", E2.ref)
 
             # refit model with user's original call but recoded data
-            model = update(model, . ~ ., data = dat)
+            model = update(model, . ~ ., data = dat.ir)
 
             # get new coefficients and ORs
             b1 = coef(model)[beta1]
@@ -395,13 +395,14 @@ interactionR = function(model, exposure_names = c(), ci.type = "delta", ci.level
         rownames(d) = NULL
     }
 
-    #if (exists("dat", envir = sys.frames())) {
-       # raw_data = dat
-    #} else {
-    #    raw_data = NULL
-    #}
+    raw_data = model$data
 
-    ir = list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call)
+
+    if (exists("dat.ir")) {
+        raw_data = dat.ir
+    }
+
+    ir = list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call, dat = raw_data)
     attr(ir, 'class') = 'interactionR'
 
 

@@ -49,6 +49,26 @@ test_that("Informs the user when carrying out the recoding", {
                "Recoding exposures; new reference category")
 })
 
+test_that("confirms that a dataframe was included as part of the returned object", {
+  model.prev2 =glm(outcome ~ exp1*exp2, family=binomial(link="logit"), data = d)
+  value = interactionR(model.prev2, exposure_names = c("exp1", "exp2"),
+                       ci.type = "delta", ci.level = 0.95,
+                       em = FALSE, recode = TRUE)
+  expect_equal(class(value$dat),
+               "data.frame")
+})
+
+test_that("confirms that the correct dataframe was included as part of the returned object", {
+  model.prev2 =glm(outcome ~ exp1*exp2, family=binomial(link="logit"), data = d)
+  value = interactionR(model.prev2, exposure_names = c("exp1", "exp2"),
+                       ci.type = "delta", ci.level = 0.95,
+                       em = FALSE, recode = TRUE)
+  expect_equal(names(value$dat)[1],
+               "outcome")
+})
+
+
+
 
 
 

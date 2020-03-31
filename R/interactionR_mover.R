@@ -72,17 +72,22 @@ interactionR_mover = function(model, exposure_names = c(), ci.level = 0.95, em =
             # extract second 'subscript' number
             E2.ref = substr(refcat, 4, 4)
 
+            #extract the raw data that was used to fit the model
+            if (class(model$data) == 'environment') {
+                stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm(), clogit(), or coxph() call")
+            }
+            dat.ir = model$data
+
             # recode each exposure based on new reference category
-            dat = model$data
-            dat[[beta1]] = ifelse(dat[[beta1]] == E1.ref, 0, 1)
-            dat[[beta2]] = ifelse(dat[[beta2]] == E2.ref, 0, 1)
+            dat.ir[[beta1]] = ifelse(dat.ir[[beta1]] == E1.ref, 0, 1)
+            dat.ir[[beta2]] = ifelse(dat.ir[[beta2]] == E2.ref, 0, 1)
 
             # inform the user
             warning("Recoding exposures; new reference category for ",
-                beta1, " is ", E1.ref, " and for ", beta2, " is ", E2.ref)
+                    beta1, " is ", E1.ref, " and for ", beta2, " is ", E2.ref)
 
             # refit model with user's original call but recoded data
-            model = update(model, . ~ ., data = dat)
+            model = update(model, . ~ ., data = dat.ir)
 
             # get new coefficients and ORs
             b1 = coef(model)[beta1]
@@ -253,11 +258,19 @@ interactionR_mover = function(model, exposure_names = c(), ci.level = 0.95, em =
         rownames(d) = NULL
     }
 
-    ir_mover = list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call)
-    attr(ir_mover, 'class') = 'interactionR'
+    raw_data = model$data
 
 
-    invisible(ir_mover)
+    if (exists("dat.ir")) {
+        raw_data = dat.ir
+    }
+
+    ir = list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call, dat = raw_data)
+    attr(ir, 'class') = 'interactionR'
+
+
+    invisible(ir)
+
 
 }
 
