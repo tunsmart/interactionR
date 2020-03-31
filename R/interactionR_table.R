@@ -116,16 +116,15 @@ interactionR_table <- function(obj) {
   right_padding(t) <- 10
   left_padding(t) <- 10
 
-  uprompt = askYesNo("Do you want to save a Microsoft Word copy of the em/interaction table to your working directory?", default = FALSE)
+  uprompt <- askYesNo("Do you want to save a Microsoft Word copy of the em/interaction table to your working directory?", default = FALSE)
 
-  if (is.na(uprompt) || !uprompt ){
+  if (is.na(uprompt) || !uprompt) {
     print_screen(t)
     invisible(t)
-    } else if (uprompt) {
+  } else if (uprompt) {
     quick_docx(t, file = "interaction_table.docx")
     print(paste("The file 'interaction_table.docx' has been saved to", getwd(), sep = " "))
     print_screen(t)
     invisible(t)
-    }
-
+  }
 }
