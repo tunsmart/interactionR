@@ -26,7 +26,6 @@ Computes confidence intervals for interaction measures using bootstrapping as de
 data(HDiscdata) # loads the dataset from assmann et al. which is available in the package
 head(HDiscdata, 2L) # prints the first two line to confirm the data is in the right format
 interactionR_bstrap(HDiscdata)
-
 }
 \references{
 Assmann SF, Hosmer DW, Lemeshow S, Mundt KA. Confidence intervals for measures of interaction. Epidemiology 1996:286-90.

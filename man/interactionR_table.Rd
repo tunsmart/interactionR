@@ -18,19 +18,21 @@ Generates a publication-ready table for effect modification and interaction anal
 Users can modify the function's output like any huxtable object @seealso \code{\link[huxtable]{huxtable}}. The confidence intervals for additive interaction measures will be as selected from the \code{\link{interactionR}} function
 }
 \examples{
-library (interactionR)
+library(interactionR)
 data(OCdata)
 
 ## fit the interaction model
-model.glm <- glm(oc ~ alc*smk,
-                 family = binomial(link = "logit"),
-                 data = OCdata)
+model.glm <- glm(oc ~ alc * smk,
+  family = binomial(link = "logit"),
+  data = OCdata
+)
 ## Then pass the fitted model to the main function
-value = interactionR(model.glm, exposure_names = c("alc", "smk"),
-             ci.type = "delta", ci.level = 0.95,
-             em = FALSE, recode = FALSE)
+value <- interactionR(model.glm,
+  exposure_names = c("alc", "smk"),
+  ci.type = "delta", ci.level = 0.95,
+  em = FALSE, recode = FALSE
+)
 
 ## Use the tabling function to generate a table
 interactionR_table(value)
-
 }

@@ -55,77 +55,84 @@ Finally, additive interaction as described by Rothman (1998) assumes that the tw
 The function can automatically carry out this recoding.
 }
 \examples{
-library (interactionR)
-data (OCdata) ## Case-control data from Rothman and Keller (1972)
+library(interactionR)
+data(OCdata) ## Case-control data from Rothman and Keller (1972)
 ## evaluating the joint effect of alcohol and smoking
 ## on oral cancer risk is included in the package
-##(cited in Hosmer and Lemeshow (1992) and Zou (2008))
+## (cited in Hosmer and Lemeshow (1992) and Zou (2008))
 
 ## fit the interaction model
-model.glm <- glm(oc ~ alc*smk,
-                 family = binomial(link = "logit"),
-                 data = OCdata)
+model.glm <- glm(oc ~ alc * smk,
+  family = binomial(link = "logit"),
+  data = OCdata
+)
 
 ## Then pass the fitted model to the function
-interactionR(model.glm, exposure_names = c("alc", "smk"),
-             ci.type = "delta", ci.level = 0.95,
-             em = FALSE, recode = FALSE)
+interactionR(model.glm,
+  exposure_names = c("alc", "smk"),
+  ci.type = "delta", ci.level = 0.95,
+  em = FALSE, recode = FALSE
+)
 
 ## Because the delta method was selected, the returned CI for the trio
 ## of interaction measures is as reported in page 455 of Hosmer and Lemeshow (1992) for this dataset
 
 ## To get CIs using the variance recovery method, set the 'ci.type' to "mover"
-interactionR(model.glm, exposure_names = c("alc", "smk"),
-             ci.type = "mover", ci.level = 0.95,
-             em = FALSE, recode = FALSE)
+interactionR(model.glm,
+  exposure_names = c("alc", "smk"),
+  ci.type = "mover", ci.level = 0.95,
+  em = FALSE, recode = FALSE
+)
 ## Now the CI returned for RERI is as Figure 4 in Zou (2008)
 
 ## To demonstrate the recoding feature of the function
 ## We simulate a dataset with three binary variables: one outcome and two preventive exposures
 
 ## Generate exposure variables
-n=2000
+n <- 2000
 set.seed(750)
-exp1 = rbinom(n, size=1, p=0.2)
+exp1 <- rbinom(n, size = 1, p = 0.2)
 set.seed(520)
-exp2 = rbinom(n, size=1, p=0.6)
+exp2 <- rbinom(n, size = 1, p = 0.6)
 
 ## Make at least one of the exposures preventive for the outcome
-b0 =log(1)
-bexp1 =log(0.4)
-bexp2 =log(1.1)
-bexp1exp2 =log(0.75)
+b0 <- log(1)
+bexp1 <- log(0.4)
+bexp2 <- log(1.1)
+bexp1exp2 <- log(0.75)
 
 ## Generate outcome
-ppred = b0 + bexp1*exp1 + bexp2*exp2 + bexp1exp2*exp1*exp2
-p = exp(ppred) / (1 +exp(ppred))
+ppred <- b0 + bexp1 * exp1 + bexp2 * exp2 + bexp1exp2 * exp1 * exp2
+p <- exp(ppred) / (1 + exp(ppred))
 set.seed(30)
-outcome =rbinom(n, size=1, p=p)
+outcome <- rbinom(n, size = 1, p = p)
 
 ## Create dataframe
-d = data.frame(outcome, exp1, exp2)
+d <- data.frame(outcome, exp1, exp2)
 
 ## Fit a logistic regression model with the data
-model.prev =glm(outcome ~ exp1*exp2, family=binomial(link="logit"), data=d)
+model.prev <- glm(outcome ~ exp1 * exp2, family = binomial(link = "logit"), data = d)
 
 ## With this model, calling the function with the default FALSE parameter for
 ## the 'recode' argument returns an error
 ## And informs the user to set 'recode' to TRUE if they want to automatically recode the variables
-\dontrun{interactionR(model.prev, exposure_names = c("exp1", "exp2"),
-             ci.type = "delta", ci.level = 0.95,
-             em = FALSE, recode = FALSE)}
+\dontrun{
+interactionR(model.prev,
+  exposure_names = c("exp1", "exp2"),
+  ci.type = "delta", ci.level = 0.95,
+  em = FALSE, recode = FALSE
+)
+}
 
 ## Set to TRUE, the function recodes the data and generate estimates
 ## for additive interaction measures with the new data the new data
 ## can be examined in the returned list object by the function
 
-interactionR(model.prev, exposure_names = c("exp1", "exp2"),
-             ci.type = "delta", ci.level = 0.95,
-             em = FALSE, recode = TRUE)
-
-
-
-
+interactionR(model.prev,
+  exposure_names = c("exp1", "exp2"),
+  ci.type = "delta", ci.level = 0.95,
+  em = FALSE, recode = TRUE
+)
 }
 \references{
 Knol MJ, VanderWeele TJ. Recommendations for presenting analyses of effect modification and interaction. Int J Epidemiol 2012; 41:514-20.
