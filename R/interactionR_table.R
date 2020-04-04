@@ -5,7 +5,7 @@
 #'
 #' @param obj An object of class 'interactionR' generated from the main function \code{\link{interactionR}}
 #'
-#' @return  saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory.
+#' @return  saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory (with user's permission).
 #' It also returns an object of class huxtable corresponding to the saved table.
 #'
 #' @examples
