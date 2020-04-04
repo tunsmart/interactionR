@@ -24,7 +24,7 @@
 interactionR_bstrap <- function(dat, seed = 5000, s = 1000) {
   trio <- function(data, indices) {
     data <- data[indices, ]
-    n = names(data)
+    n <- names(data)
     m <- glm(str2lang(paste(n[1], "~", n[2], "*", n[3], "+.", sep = "")),
       family = binomial(link = "logit"),
       data = data
