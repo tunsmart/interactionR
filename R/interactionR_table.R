@@ -54,9 +54,9 @@ interactionR_table <- function(obj) {
   )
 
   if (grepl("\\blog\\b", obj$call[3]) || grepl("poisson", obj$call[3])) {
-    effect_measure = "RR [95% CI]"
+    effect_measure <- "RR [95% CI]"
   } else {
-    effect_measure = "OR [95% CI]"
+    effect_measure <- "OR [95% CI]"
   }
 
   if (em) {

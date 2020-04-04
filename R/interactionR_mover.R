@@ -46,9 +46,9 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
 
   # Extracts the names for the main exposure (beta1), the effect modifier
   # (beta2) and their interaction term
-  e1 = grep(exposure_names[1], names(coef(model)), value = TRUE, ignore.case = TRUE)
-  e2 = grep(exposure_names[2], names(coef(model)), value = TRUE, ignore.case = TRUE)
-  exposure_names = union(e1,e2)
+  e1 <- grep(exposure_names[1], names(coef(model)), value = TRUE, ignore.case = TRUE)
+  e2 <- grep(exposure_names[2], names(coef(model)), value = TRUE, ignore.case = TRUE)
+  exposure_names <- union(e1, e2)
   beta1 <- exposure_names[1]
   beta2 <- exposure_names[3]
   beta3 <- exposure_names[2]
