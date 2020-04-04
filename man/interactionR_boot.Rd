@@ -35,13 +35,15 @@ Confidence intervals for interaction measures using bootstrapping as described b
 \examples{
 ## Model fitting using dataset from assmann et al.
 ## The data is available in the package.
-m <- glm(h ~ ns*smk,
-family = binomial(link = "logit"),
-data = HDiscdata)
-
+m <- glm(h ~ ns * smk,
+  family = binomial(link = "logit"),
+  data = HDiscdata
+)
 \dontrun{
-interactionR_boot (m, ci.level = 0.95, em = FALSE, recode = FALSE,
-seed = 12345, s=1000)
+interactionR_boot(m,
+  ci.level = 0.95, em = FALSE, recode = FALSE,
+  seed = 12345, s = 1000
+)
 }
 
 }
