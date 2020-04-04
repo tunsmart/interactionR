@@ -1,4 +1,4 @@
-#' Case-control study of the joint effect of alcohol and smoking on oral cance by Rothman and Keller.
+#' Case-control study of the joint effect of alcohol and smoking on oral cancer by Rothman and Keller.
 #'
 #' A dataset containing three dichotomous variables: oral cancer, alcohol and smoking
 #'

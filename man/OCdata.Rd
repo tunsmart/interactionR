@@ -3,7 +3,7 @@
 \docType{data}
 \name{OCdata}
 \alias{OCdata}
-\title{Case-control study of the joint effect of alcohol and smoking on oral cance by Rothman and Keller.}
+\title{Case-control study of the joint effect of alcohol and smoking on oral cancer by Rothman and Keller.}
 \format{
 A data frame with 458 observations and 3 variables:
 \describe{
