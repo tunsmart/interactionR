@@ -8,6 +8,7 @@
 #' }
 #'
 #' @param seed The random seed to use for generating the bootstrap samples for confidence intervals (for reproducibility). Default is 5000, but can be set to any number.
+#' @param s    Number of bootstrap resampling. Default is 1000
 #'
 #' @return a dataframe containing effect estimates of additive interaction measures with bootstrapped 95% CI limits.
 #'
@@ -20,7 +21,7 @@
 #'
 #' @export
 #' @importFrom boot boot
-interactionR_bstrap <- function(dat, seed = 5000) {
+interactionR_bstrap <- function(dat, seed = 5000, s = 1000) {
   trio <- function(data, indices) {
     data <- data[indices, ]
     m <- glm(data[, 1] ~ data[, 2] * data[, 3],
@@ -44,7 +45,7 @@ interactionR_bstrap <- function(dat, seed = 5000) {
   }
 
   set.seed(seed)
-  bstrap <- boot(data = dat, trio, R = 1000)
+  bstrap <- boot(data = dat, trio, R = s)
   RERI <- bstrap$t0[1]
   AP <- bstrap$t0[2]
   SI <- bstrap$t0[3]
