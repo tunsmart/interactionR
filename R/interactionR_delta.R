@@ -13,7 +13,7 @@
 #' @return  a list object of class 'interactionR' that includes a dataframe containing all effect estimates neccesary for full reporting of effect modification or interaction analysis
 #'
 #' @examples
-#' data(OCdata) ## Case-control data from Rothman and Keller (1972)
+#' ## Using Case-control data from Rothman and Keller (1972)
 #' ## evaluating the joint effect of alcohol and smoking
 #' ## on oral cancer risk is included in the package
 #' ## (cited in Hosmer and Lemeshow (1992) and Zou (2008))
@@ -160,7 +160,6 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
     1, mean = c(b1, b2, b3), cov = v_cov1)
   CI.ll_RERI <- RERI - z * se_RERI
   CI.ul_RERI <- RERI + z * se_RERI
-  p_RERI <- 1 - pnorm(RERI / se_RERI)
 
   # AP, CI and p-value
   AP <- RERI / OR11
@@ -168,7 +167,6 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
     x2 + x3), mean = c(b1, b2, b3), cov = v_cov1)
   CI.ll_AP <- AP - z * se_AP
   CI.ul_AP <- AP + z * se_AP
-  p_AP <- 1 - pnorm(abs(AP) / se_AP)
 
 
   # SI, CI and p-value

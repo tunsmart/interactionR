@@ -55,12 +55,10 @@ Finally, additive interaction as described by Rothman (1998) assumes that the tw
 The function can automatically carry out this recoding.
 }
 \examples{
-library(interactionR)
-data(OCdata) ## Case-control data from Rothman and Keller (1972)
+## Using Case-control data from Rothman and Keller (1972)
 ## evaluating the joint effect of alcohol and smoking
 ## on oral cancer risk is included in the package
 ## (cited in Hosmer and Lemeshow (1992) and Zou (2008))
-
 ## fit the interaction model
 model.glm <- glm(oc ~ alc * smk,
   family = binomial(link = "logit"),

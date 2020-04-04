@@ -14,7 +14,7 @@
 #' @return  a list object of class 'interactionR' that includes a dataframe containing all effect estimates neccesary for full reporting of effect modification or interaction analysis
 #'
 #' @examples
-#' data(OCdata) ## Case-control data from Rothman and Keller (1972)
+#' ## Using Case-control data from Rothman and Keller (1972)
 #' ## evaluating the joint effect of alcohol and smoking
 #' ## on oral cancer risk is included in the package
 #' ## (cited in Hosmer and Lemeshow (1992) and Zou (2008))
