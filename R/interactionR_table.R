@@ -53,15 +53,21 @@ interactionR_table <- function(obj) {
     sep = " "
   )
 
+  if (grepl("\\blog\\b", obj$call[3]) || grepl("poisson", obj$call[3])) {
+    effect_measure = "RR [95% CI]"
+  } else {
+    effect_measure = "OR [95% CI]"
+  }
+
   if (em) {
     t <- hux(
       c1 = c(
         NA, NA, E1.absent, E1.present, "Multiplicative scale",
         "RERI"
-      ), c2 = c(E2.absent, "OR [95% CI]", NA, NA, NA, NA),
-      c3 = c(E2.present, "OR [95% CI]", NA, NA, NA, NA), c4 = c(
+      ), c2 = c(E2.absent, effect_measure, NA, NA, NA, NA),
+      c3 = c(E2.present, effect_measure, NA, NA, NA, NA), c4 = c(
         WithinStrataEffect1,
-        "OR [95% CI]", NA, NA, NA, NA
+        effect_measure, NA, NA, NA, NA
       )
     )
     t[3, 2] <- paste("1", "[Reference]", sep = " ")
@@ -84,13 +90,13 @@ interactionR_table <- function(obj) {
       "Multiplicative scale", "RERI", "AP", "SI"
     ), c2 = c(
       E2.absent,
-      "OR [95% CI]", NA, NA, NA, NA, NA, NA, NA
+      effect_measure, NA, NA, NA, NA, NA, NA, NA
     ), c3 = c(
       E2.present,
-      "OR [95% CI]", NA, NA, NA, NA, NA, NA, NA
+      effect_measure, NA, NA, NA, NA, NA, NA, NA
     ), c4 = c(
       WithinStrataEffect1,
-      "OR [95% CI]", NA, NA, NA, NA, NA, NA, NA
+      effect_measure, NA, NA, NA, NA, NA, NA, NA
     ))
     t[3, 2] <- paste("1", "[Reference]", sep = " ")
     t[3, 3] <- paste(d[2, 2], " [", d[2, 3], ", ", d[2, 4], "]", sep = "")

@@ -149,9 +149,12 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
 
   # Extracts the names for the main exposure (beta1), the effect modifier
   # (beta2) and their joint efffect (beta1 + beta2 + beta1:beta2)
+  e1 = grep(exposure_names[1], names(coef(model)), value = TRUE, ignore.case = TRUE)
+  e2 = grep(exposure_names[2], names(coef(model)), value = TRUE, ignore.case = TRUE)
+  exposure_names = union(e1,e2)
   beta1 <- exposure_names[1]
-  beta2 <- exposure_names[2]
-  beta3 <- paste(beta1, beta2, sep = ":")
+  beta2 <- exposure_names[3]
+  beta3 <- exposure_names[2]
 
   varNames <- c(beta1, beta2, beta3)
 
