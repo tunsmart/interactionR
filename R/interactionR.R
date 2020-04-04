@@ -148,7 +148,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
   z <- qnorm(1 - alpha / 2)
 
   # Extracts the names for the main exposure (beta1), the effect modifier
-  # (beta2) and their joint efffect (beta1 + beta2 + beta1:beta2)
+  # (beta2) and their interaction term
   e1 = grep(exposure_names[1], names(coef(model)), value = TRUE, ignore.case = TRUE)
   e2 = grep(exposure_names[2], names(coef(model)), value = TRUE, ignore.case = TRUE)
   exposure_names = union(e1,e2)
