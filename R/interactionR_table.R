@@ -3,7 +3,7 @@
 #' Generates a publication-ready table for effect modification and interaction analysis based on Tables 1 and 3 in Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}].
 #' Users can modify the function's output like any huxtable object @seealso \code{\link[huxtable]{huxtable}}. The confidence intervals for additive interaction measures will be as selected from the \code{\link{interactionR}} function
 #'
-#' @param obj An object of class 'interactionR' generated from the main function \code{\link{interactionR}}
+#' @param obj An object of class 'interactionR' generated from any of the main functions in the \code{\link{interactionR}} package
 #'
 #' @return  saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory (with user's permission).
 #' It also returns an object of class huxtable corresponding to the saved table.

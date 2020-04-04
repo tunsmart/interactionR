@@ -7,7 +7,7 @@
 interactionR_table(obj)
 }
 \arguments{
-\item{obj}{An object of class 'interactionR' generated from the main function \code{\link{interactionR}}}
+\item{obj}{An object of class 'interactionR' generated from any of the main functions in the \code{\link{interactionR}} package}
 }
 \value{
 saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory (with user's permission).
