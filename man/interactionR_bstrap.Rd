@@ -4,7 +4,7 @@
 \alias{interactionR_bstrap}
 \title{Computes confidence intervals for interaction measures using bootstrapping as described by Assmann et al (1996).}
 \usage{
-interactionR_bstrap(dat, seed = 5000)
+interactionR_bstrap(dat, seed = 5000, s = 1000)
 }
 \arguments{
 \item{dat}{a data frame containing the variables required to estimate the measures of additive interactions in the following order of columns:
@@ -15,6 +15,8 @@ interactionR_bstrap(dat, seed = 5000)
 }}
 
 \item{seed}{The random seed to use for generating the bootstrap samples for confidence intervals (for reproducibility). Default is 5000, but can be set to any number.}
+
+\item{s}{Number of bootstrap resampling. Default is 1000}
 }
 \value{
 a dataframe containing effect estimates of additive interaction measures with bootstrapped 95% CI limits.
