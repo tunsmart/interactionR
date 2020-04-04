@@ -68,17 +68,14 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
       stop("Error: At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
     }
     if (recode) {
-      # find stratum with lowest overall risk, conditional on covariates
       temp <- data.frame(cat = c("OR10", "OR01", "OR11"), value = c(
         exp(b1),
         exp(b2), exp(b1 + b2 + b3)
       ))
-      refcat <- temp$cat[which.min(temp$value)] # get category's name
+      ref.cat <- temp$cat[which.min(temp$value)]
 
-      # extract first 'subscript' number
-      E1.ref <- substr(refcat, 3, 3)
-      # extract second 'subscript' number
-      E2.ref <- substr(refcat, 4, 4)
+      E1.ref <- substr(ref.cat, 3, 3)
+      E2.ref <- substr(ref.cat, 4, 4)
 
       # extract the raw data that was used to fit the model
       if (class(model$data) == "environment") {
@@ -86,7 +83,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
       }
       dat.ir <- model$data
 
-      # recode each exposure based on new reference category
+      # recode based on new reference category
       dat.ir[[beta1]] <- ifelse(dat.ir[[beta1]] == E1.ref, 0, 1)
       dat.ir[[beta2]] <- ifelse(dat.ir[[beta2]] == E2.ref, 0, 1)
 
@@ -96,9 +93,8 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
         beta1, " is ", E1.ref, " and for ", beta2, " is ", E2.ref
       )
 
-      # refit model with user's original call but recoded data
+      # refit model with user's original call
       model <- update(model, . ~ ., data = dat.ir)
-
       # get new coefficients and ORs
       b1 <- coef(model)[beta1]
       b2 <- coef(model)[beta2]

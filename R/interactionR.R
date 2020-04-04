@@ -171,16 +171,13 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
       stop("Error: At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
     }
     if (recode) {
-      # find stratum with lowest overall risk, conditional on covariates
       temp <- data.frame(cat = c("OR10", "OR01", "OR11"), value = c(
         exp(b1),
         exp(b2), exp(b1 + b2 + b3)
       ))
-      ref.cat <- temp$cat[which.min(temp$value)] # get category's name
+      ref.cat <- temp$cat[which.min(temp$value)]
 
-      # extract first 'subscript' number
       E1.ref <- substr(ref.cat, 3, 3)
-      # extract second 'subscript' number
       E2.ref <- substr(ref.cat, 4, 4)
 
       # extract the raw data that was used to fit the model
@@ -189,7 +186,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
       }
       dat.ir <- model$data
 
-      # recode each exposure based on new reference category
+      # recode based on new reference category
       dat.ir[[beta1]] <- ifelse(dat.ir[[beta1]] == E1.ref, 0, 1)
       dat.ir[[beta2]] <- ifelse(dat.ir[[beta2]] == E2.ref, 0, 1)
 
@@ -199,7 +196,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
         beta1, " is ", E1.ref, " and for ", beta2, " is ", E2.ref
       )
 
-      # refit model with user's original call but recoded data
+      # refit model with user's original call
       model <- update(model, . ~ ., data = dat.ir)
 
       # get new coefficients and ORs
@@ -216,7 +213,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
   v3 <- se_vec[beta3]^2
 
   ### Extracts the variance-covariance matrix from the model### for use in
-  ### the delta method CI estimation for RERI and AP###
+  ### the delta and MOVER method CI estimation for RERI and AP###
   v_cov <- vcov(model)
   v_cov1 <- v_cov[varNames, varNames] # for deltamethod
   cov12 <- v_cov[beta1, beta2]
