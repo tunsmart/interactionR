@@ -13,8 +13,8 @@ License: GPL-2 | GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    boot,
     msm,
+    car,
     huxtable,
     officer,
     flextable
