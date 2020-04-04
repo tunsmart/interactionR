@@ -17,13 +17,15 @@
 #' @examples
 #' ## Model fitting using dataset from assmann et al.
 #' ## The data is available in the package.
-#' m <- glm(h ~ ns*smk,
-#' family = binomial(link = "logit"),
-#' data = HDiscdata)
-#'
+#' m <- glm(h ~ ns * smk,
+#'   family = binomial(link = "logit"),
+#'   data = HDiscdata
+#' )
 #' \dontrun{
-#' interactionR_boot (m, ci.level = 0.95, em = FALSE, recode = FALSE,
-#' seed = 12345, s=1000)
+#' interactionR_boot(m,
+#'   ci.level = 0.95, em = FALSE, recode = FALSE,
+#'   seed = 12345, s = 1000
+#' )
 #' }
 #'
 #' @references
@@ -31,9 +33,8 @@
 #'
 #' @export
 #' @importFrom car Boot Confint
-interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed = 12345, s=1000) {
-
-  if (class(model)[1] != 'glm') {
+interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed = 12345, s = 1000) {
+  if (class(model)[1] != "glm") {
     stop("The 'model' argument must be a regression model object fit with glm()")
   }
 
@@ -141,29 +142,29 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
   CI.ul_OR_M <- exp(confint.default(model)[beta3, 2])
 
   set.seed(seed)
-  b = car::Boot(model, f=trio, R=s, method = c("case"))
-  bmatrix = car::Confint(b, level = ci.level, type = "perc")
+  b <- car::Boot(model, f = trio, R = s, method = c("case"))
+  bmatrix <- car::Confint(b, level = ci.level, type = "perc")
 
-  #Extracts additive interaction measures and CIs from the bootstrap
-  RERI = bmatrix[1,1]
-  CI.ll_RERI = bmatrix[1,2]
-  CI.ul_RERI = bmatrix[1,3]
+  # Extracts additive interaction measures and CIs from the bootstrap
+  RERI <- bmatrix[1, 1]
+  CI.ll_RERI <- bmatrix[1, 2]
+  CI.ul_RERI <- bmatrix[1, 3]
 
-  AP = bmatrix[2,1]
-  CI.ll_AP = bmatrix[2,2]
-  CI.ul_AP = bmatrix[2,3]
+  AP <- bmatrix[2, 1]
+  CI.ll_AP <- bmatrix[2, 2]
+  CI.ul_AP <- bmatrix[2, 3]
 
-  SI = bmatrix[3,1]
-  CI.ll_SI = bmatrix[3,2]
-  CI.ul_SI = bmatrix[3,3]
+  SI <- bmatrix[3, 1]
+  CI.ll_SI <- bmatrix[3, 2]
+  CI.ul_SI <- bmatrix[3, 3]
 
   d <- data.frame(Measures = c(
     "OR00", "OR01", "OR10", "OR11", paste("OR(",
-                                          beta2, " on outcome [", beta1, "==0]",
-                                          sep = ""
+      beta2, " on outcome [", beta1, "==0]",
+      sep = ""
     ), paste("OR(",
-             beta2, " on outcome [", beta1, "==1]",
-             sep = ""
+      beta2, " on outcome [", beta1, "==1]",
+      sep = ""
     ), "Multiplicative scale",
     "RERI", "AP"
   ), Estimates = c(
@@ -184,17 +185,17 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
   if (!em) {
     d <- data.frame(Measures = c(
       "OR00", "OR01", "OR10", "OR11", paste("OR(",
-                                            beta2, " on outcome [", beta1, "==0]",
-                                            sep = ""
+        beta2, " on outcome [", beta1, "==0]",
+        sep = ""
       ), paste("OR(",
-               beta2, " on outcome [", beta1, "==1]",
-               sep = ""
+        beta2, " on outcome [", beta1, "==1]",
+        sep = ""
       ), paste("OR(",
-               beta1, " on outcome [", beta2, "==0]",
-               sep = ""
+        beta1, " on outcome [", beta2, "==0]",
+        sep = ""
       ), paste("OR(",
-               beta1, " on outcome [", beta2, "==1]",
-               sep = ""
+        beta1, " on outcome [", beta2, "==1]",
+        sep = ""
       ), "Multiplicative scale",
       "RERI", "AP", "SI"
     ), Estimates = c(
