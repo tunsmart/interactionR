@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Babatunde Alli
 Maintainer: Babatunde Alli <babatunde.alli@mail.mcgill.ca>
 Description: Produces a publication-ready table that includes all 
-    effect estimates neccessary for full reporting effect modification 
+    effect estimates necessary for full reporting effect modification 
     or interaction analysis as recommended by Knol and Vanderweele (2012) [<https://academic.oup.com/ije/article/41/2/514/692957>]. It also estimates confidence interval for 
     the trio of additive interaction measures using the delta method (see Hosmer and Lemeshow (1992), [<https://journals.lww.com/epidem/Abstract/1992/09000/Confidence_Interval_Estimation_of_Interaction.12.aspx>]), 
     variance recovery method (see Zou (2008), [<https://academic.oup.com/aje/article/168/2/212/100828>]), or bootstrapping (see Assmann et al. (1996), [<doi:10.1097/00001648-199605000-00012>] ). 
