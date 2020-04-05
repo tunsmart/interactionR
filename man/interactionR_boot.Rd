@@ -22,7 +22,7 @@ interactionR_boot(
 
 \item{recode}{If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.}
 
-\item{seed}{The random seed to use for generating the bootstrap samples for confidence intervals (for reproducibility). Default is 5000, but can be set to any number.}
+\item{seed}{The random seed to use for generating the bootstrap samples for confidence intervals (for reproducibility). Default is 12345, but can be set to any number.}
 
 \item{s}{Number of bootstrap resampling. Default is 1000}
 }
