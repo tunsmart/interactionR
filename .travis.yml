@@ -1,7 +1,2 @@
 language: R
-os: osx
-addons:
-  homebrew:
-    packages:
-    - tlmgr -2.9.7300
-
+os: linux
