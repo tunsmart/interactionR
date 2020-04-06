@@ -25,7 +25,7 @@ interactionR_mover(
 \item{recode}{If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.}
 }
 \value{
-a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis
+a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis. @seealso \code{\link{interactionR_table}} for how to generate a publication-ready table with this object.
 }
 \description{
 Computes confidence intervals for interaction measures using the variance

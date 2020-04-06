@@ -27,7 +27,7 @@ interactionR(
 \item{recode}{If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.}
 }
 \value{
-a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis
+a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis. @seealso \code{\link{interactionR_table}} for how to generate a publication-ready table with this object.
 }
 \description{
 For two binary exposures included in a regression model as an interaction term for a binary outcome, \code{interactionR} returns all effect estimates necessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}]. Estimation of confidence intervals (CI) for measures of additive interaction (RERI, AP, and SI) is based on the delta method described by Hosmer and Lemeshow (1992) [\url{https://doi.org/10.1097/00001648-199209000-00012}] or the variance recovery 'mover' method described by Zou (2008) [\url{https://doi.org/10.1093/aje/kwn104}].

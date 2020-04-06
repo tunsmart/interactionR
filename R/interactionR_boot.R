@@ -12,7 +12,7 @@
 #'
 #' @param  s   Number of bootstrap resampling. Default is 1000
 #'
-#' @return  a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis
+#' @return  a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis. @seealso \code{\link{interactionR_table}} for how to generate a publication-ready table with this object.
 #'
 #' @examples
 #' ## Model fitting using dataset from assmann et al.
