@@ -3,6 +3,5 @@ os: osx
 addons:
   homebrew:
     packages:
-    - tlmgr
-    update: false
+    - tlmgr -2.9.7300
 
