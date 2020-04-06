@@ -1,5 +1,4 @@
 language: R
-os:
-  - osx
+os: osx
 #MAC OSX 10.12
 osx_image: xcode9.2
