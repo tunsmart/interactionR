@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 [![Build Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://travis-ci.com/epi-zen/interactionR)
 
-Produces a publication-ready table that includes all effect estimates neccessary for full reporting effect modification or interaction analysis. It also estimates confidence interval for the trio of additive interaction measures using the delta method, variance recovery method, or bootstrapping. 
+Produces a publication-ready table that includes all effect estimates necessary for full reporting effect modification and interaction analysis. It also estimates confidence interval for the trio of additive interaction measures using the delta method, variance recovery method, or bootstrapping. 
 
 ## Installation
 

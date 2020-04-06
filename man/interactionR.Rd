@@ -27,10 +27,10 @@ interactionR(
 \item{recode}{If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly.}
 }
 \value{
-a list object of class 'interactionR' that includes a dataframe containing all effect estimates neccesary for full reporting of effect modification or interaction analysis
+a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis
 }
 \description{
-For two binary exposures included in a regression model as an interaction term for a binary outcome, \code{interactionR} returns all effect estimates neccessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}]. Estimation of confidence intervals (CI) for measures of additive interaction (RERI, AP, and SI) is based on the delta method described by Hosmer and Lemeshow (1992) [\url{https://doi.org/10.1097/00001648-199209000-00012}] or the variance recovery 'mover' method described by Zou (2008) [\url{https://doi.org/10.1093/aje/kwn104}].
+For two binary exposures included in a regression model as an interaction term for a binary outcome, \code{interactionR} returns all effect estimates necessary to fully report effect modification or interaction analysis as recommended by Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}]. Estimation of confidence intervals (CI) for measures of additive interaction (RERI, AP, and SI) is based on the delta method described by Hosmer and Lemeshow (1992) [\url{https://doi.org/10.1097/00001648-199209000-00012}] or the variance recovery 'mover' method described by Zou (2008) [\url{https://doi.org/10.1093/aje/kwn104}].
 }
 \details{
 Effect modification is assessed when the effect of an exposure on an outcome differs within the strata of another exposure, while,
@@ -114,7 +114,7 @@ model.prev <- glm(outcome ~ exp1 * exp2, family = binomial(link = "logit"), data
 ## With this model, calling the function with the default FALSE parameter for
 ## the 'recode' argument returns an error
 ## And informs the user to set 'recode' to TRUE if they want to automatically recode the variables
-\dontrun{
+\donttest{
 interactionR(model.prev,
   exposure_names = c("exp1", "exp2"),
   ci.type = "delta", ci.level = 0.95,

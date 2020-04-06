@@ -5,7 +5,7 @@ interactionR
 Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://travis-ci.com/epi-zen/interactionR)
 
 Produces a publication-ready table that includes all effect estimates
-neccessary for full reporting effect modification or interaction
+necessary for full reporting effect modification and interaction
 analysis. It also estimates confidence interval for the trio of additive
 interaction measures using the delta method, variance recovery method,
 or bootstrapping.
@@ -49,6 +49,7 @@ To generate a publication-ready table, we’ll call the tabling function
 
 ``` r
 interactionR_table(value)
+
 #>                          Interaction of alc and smk                          
 #> -----------------------------------------------------------------------------
 #>                      smk absent         smk present        Effect of smk     
@@ -74,5 +75,4 @@ interactionR_table(value)
 #> -----------------------------------------------------------------------------
 #> 
 #> Column names: c1, c2, c3, c4
-#> [1] "The file 'interaction_table.docx' has been saved to C:/Users/Public/interactionR"
 ```

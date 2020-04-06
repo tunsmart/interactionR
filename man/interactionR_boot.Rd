@@ -27,7 +27,7 @@ interactionR_boot(
 \item{s}{Number of bootstrap resampling. Default is 1000}
 }
 \value{
-a list object of class 'interactionR' that includes a dataframe containing all effect estimates neccesary for full reporting of effect modification or interaction analysis
+a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis
 }
 \description{
 Confidence intervals for interaction measures using bootstrapping as described by Assmann et al (1996).
@@ -39,13 +39,12 @@ m <- glm(h ~ ns * smk,
   family = binomial(link = "logit"),
   data = HDiscdata
 )
-\dontrun{
+\donttest{
 interactionR_boot(m,
   ci.level = 0.95, em = FALSE, recode = FALSE,
   seed = 12345, s = 1000
 )
 }
-
 }
 \references{
 Assmann SF, Hosmer DW, Lemeshow S, Mundt KA. Confidence intervals for measures of interaction. Epidemiology 1996:286-90.
