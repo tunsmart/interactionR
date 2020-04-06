@@ -123,7 +123,7 @@ interactionR(model.prev,
 }
 
 ## Set to TRUE, the function recodes the data and generate estimates
-## for additive interaction measures with the new data the new data
+## for additive interaction measures with the new data which
 ## can be examined in the returned list object by the function
 
 interactionR(model.prev,
