@@ -13,8 +13,12 @@ or bootstrapping.
 Installation
 ------------
 
-You can install the development version from
-[GitHub](https://github.com/) with:
+interactionR is on
+[CRAN](https://cran.r-project.org/package=interactionR), install using
+`install.packages("interactionR")`.
+
+You can also install the development version from
+[GitHub](https://github.com/epi-zen/interactionR) with:
 
 ``` r
 # install.packages("devtools")
@@ -49,7 +53,7 @@ To generate a publication-ready table, we’ll call the tabling function
 
 ``` r
 interactionR_table(value)
-
+#> Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
 #>                          Interaction of alc and smk                          
 #> -----------------------------------------------------------------------------
 #>                      smk absent         smk present        Effect of smk     

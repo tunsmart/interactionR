@@ -20,8 +20,9 @@ knitr::opts_chunk$set(
 Produces a publication-ready table that includes all effect estimates necessary for full reporting effect modification and interaction analysis. It also estimates confidence interval for the trio of additive interaction measures using the delta method, variance recovery method, or bootstrapping. 
 
 ## Installation
+interactionR is on [CRAN](https://cran.r-project.org/package=interactionR), install using `install.packages("interactionR")`.
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can also install the development version from [GitHub](https://github.com/epi-zen/interactionR) with:
 
 ``` r
 # install.packages("devtools")
