@@ -60,6 +60,7 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
   b2 <- coef(model)[beta2]
   b3 <- coef(model)[beta3]
 
+  #### Recode section code is adapted from Marthur and Vanderweele 2018 (doi: 10.1097/EDE.0000000000000752) ####
 
   # check if any exposure is preventive
   if (preventive(OR10 = exp(b1), OR01 = exp(b2))) {
@@ -100,6 +101,7 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
       b3 <- coef(model)[beta3]
     }
   }
+  #### End of recode section ####
 
   se_vec <- summary(model)$coefficients[, 2] # extracts the SE vector for the coefficients
   # from the model
