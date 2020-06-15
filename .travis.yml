@@ -1,2 +1,4 @@
 language: R
-os: linux
+os:
+   - linux
+   - osx
