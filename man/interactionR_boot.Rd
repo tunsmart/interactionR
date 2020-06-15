@@ -27,7 +27,7 @@ interactionR_boot(
 \item{s}{Number of bootstrap resampling. Default is 1000}
 }
 \value{
-a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis. @seealso \code{\link{interactionR_table}} for how to generate a publication-ready table with this object.
+a list object of class 'interactionR' that includes a dataframe containing all effect estimates necessary for full reporting of effect modification or interaction analysis. @seealso \code{\link{interactionR_table}} for how to generate a publication-ready table from this object.
 }
 \description{
 Confidence intervals for interaction measures using bootstrapping as described by Assmann et al (1996).
