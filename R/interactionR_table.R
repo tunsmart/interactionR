@@ -70,7 +70,9 @@ interactionR_table <- function(obj) {
     c(NA, effect_measure, NA, NA, NA, NA), c(
       NA,
       effect_measure, NA, NA, NA, NA
-    ), stringsAsFactors = FALSE)
+    ),
+    stringsAsFactors = FALSE
+    )
     names(t) <- c("*", E2.absent, E2.present, WithinStrataEffect1)
 
     t[3, 2] <- paste("1", "[Reference]", sep = " ")
@@ -83,11 +85,10 @@ interactionR_table <- function(obj) {
     t[6, 2] <- paste(d[8, 2], " [", d[8, 3], ", ", d[8, 4], "]", sep = "")
 
 
-    t2 <- flextable (t)
+    t2 <- flextable(t)
     t2 <- set_caption(t2, paste("Modification of the effect of", beta1, "and", beta2, sep = " "))
-
   } else {
-    t = data.frame(c(
+    t <- data.frame(c(
       NA, NA, E1.absent, E1.present, WithinStrataEffect2,
       "Multiplicative scale", "RERI", "AP", "SI"
     ), c(
