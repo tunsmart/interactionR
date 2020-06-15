@@ -46,7 +46,7 @@ estimate the CI for additive interaction measures by specifying “mover”
 for the ‘ci.type’ argument
 
 ``` r
-value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = F, recode = F)
+value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = T, recode = F)
 ```
 
 To generate a publication-ready table, we’ll call the tabling function
@@ -54,7 +54,7 @@ To generate a publication-ready table, we’ll call the tabling function
 ``` r
 interactionR_table(value)
 #> Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
-#>                          Interaction of alc and smk                          
+#>                   Modification of the effect of smk by alc                   
 #> -----------------------------------------------------------------------------
 #>                      smk absent         smk present        Effect of smk     
 #>                                                            within the        
@@ -65,17 +65,10 @@ interactionR_table(value)
 #>                                         12.91]             12.91]            
 #>   alc present        3.33 [0.7,         9.04 [2.64,        2.71 [1, 7.37]    
 #>                      15.86]             30.91]                               
-#>   Effect of alc      3.33 [0.7,         3.05 [1.29,                          
-#>   within the         15.86]             7.18]                                
-#>   strata of smk                                                              
 #>   Multiplicative     0.91 [0.15,                                             
 #>   scale              5.42]                                                   
 #>   RERI               3.74 [-11.43,                                           
 #>                      21.87]                                                  
-#>   AP                 0.41 [-0.38,                                            
-#>                      0.81]                                                   
-#>   SI                 1.87 [0.65,                                             
-#>                      5.42]                                                   
 #> -----------------------------------------------------------------------------
 #> 
 #> Column names: c1, c2, c3, c4

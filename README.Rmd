@@ -46,7 +46,7 @@ value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "del
 If we want, we could use the variance recovery method (Zou (2008)) to estimate the CI for additive interaction measures by specifying "mover" for the 'ci.type' argument
 
 ```{r example2}
-value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = F, recode = F)
+value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = T, recode = F)
 ```
 
 
