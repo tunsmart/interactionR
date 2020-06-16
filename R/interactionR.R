@@ -101,14 +101,6 @@
 #' ## With this model, calling the function with the default FALSE parameter for
 #' ## the 'recode' argument returns an error
 #' ## And informs the user to set 'recode' to TRUE if they want to automatically recode the variables
-#' \donttest{
-#' interactionR(model.prev,
-#'   exposure_names = c("exp1", "exp2"),
-#'   ci.type = "delta", ci.level = 0.95,
-#'   em = FALSE, recode = FALSE
-#' )
-#' }
-#'
 #' ## Set to TRUE, the function recodes the data and generate estimates
 #' ## for additive interaction measures with the new data which
 #' ## can be examined in the returned list object by the function
