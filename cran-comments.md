@@ -13,5 +13,6 @@
 
 0 errors | 0 warnings | 0 note
 
-* This is a new release.
+## What's new?
+* This is a patch for the previously archived version of the package due to the archiving of a strong dependency - Huxtable. In this patch, Huxtable has been replaced with Flextable
 
