@@ -41,7 +41,7 @@ model.glm <- glm(oc ~ alc*smk, family = binomial(link = "logit"), data = OCdata)
 value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
 ```
 
-If we want, we could use the variance recovery method (Zou (2008)) to
+If you want, you could use the variance recovery method (Zou (2008)) to
 estimate the CI for additive interaction measures by specifying “mover”
 for the ‘ci.type’ argument
 
@@ -53,23 +53,17 @@ To generate a publication-ready table, we’ll call the tabling function
 
 ``` r
 interactionR_table(value)
-#> Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
-#>                   Modification of the effect of smk by alc                   
-#> -----------------------------------------------------------------------------
-#>                      smk absent         smk present        Effect of smk     
-#>                                                            within the        
-#>                                                            strata of alc     
-#> -----------------------------------------------------------------------------
-#>                      OR [95% CI]        OR [95% CI]        OR [95% CI]       
-#>   alc absent         1 [Reference]      2.96 [0.68,        2.96 [0.68,       
-#>                                         12.91]             12.91]            
-#>   alc present        3.33 [0.7,         9.04 [2.64,        2.71 [1, 7.37]    
-#>                      15.86]             30.91]                               
-#>   Multiplicative     0.91 [0.15,                                             
-#>   scale              5.42]                                                   
-#>   RERI               3.74 [-11.43,                                           
-#>                      21.87]                                                  
-#> -----------------------------------------------------------------------------
-#> 
-#> Column names: c1, c2, c3, c4
+ 
+#>                      *        smk absent        smk present
+#> 1                 <NA>              <NA>               <NA>
+#> 2                 <NA>       OR [95% CI]        OR [95% CI]
+#> 3           alc absent     1 [Reference] 2.96 [0.68, 12.91]
+#> 4          alc present 3.33 [0.7, 15.86] 9.04 [2.64, 30.91]
+#> 5 Multiplicative scale 0.91 [0.15, 5.42]               <NA>
+#>   Effect of smk within the strata of alc
+#> 1                                   <NA>
+#> 2                            OR [95% CI]
+#> 3                     2.96 [0.68, 12.91]
+#> 4                         2.71 [1, 7.37]
+#> 5                                   <NA>
 ```

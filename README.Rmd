@@ -43,7 +43,7 @@ model.glm <- glm(oc ~ alc*smk, family = binomial(link = "logit"), data = OCdata)
 value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "delta", ci.level = 0.95, em = F, recode = F)
 ```
 
-If we want, we could use the variance recovery method (Zou (2008)) to estimate the CI for additive interaction measures by specifying "mover" for the 'ci.type' argument
+If you want, you could use the variance recovery method (Zou (2008)) to estimate the CI for additive interaction measures by specifying "mover" for the 'ci.type' argument
 
 ```{r example2}
 value = interactionR(model.glm, exposure_names = c("alc", "smk"), ci.type = "mover", ci.level = 0.95, em = T, recode = F)
