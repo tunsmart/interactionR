@@ -1,6 +1,6 @@
 Package: interactionR
 Type: Package
-Title: A Package for Full Reporting of Interaction Analyses
+Title: Full Reporting of Interaction Analyses
 Version: 0.1.1
 Author: Babatunde Alli
 Maintainer: Babatunde Alli <babatunde.alli@mail.mcgill.ca>
