@@ -27,7 +27,7 @@
 #' )
 #'
 #' ## Use the tabling function to generate a table
-#' interactionR_table(value, tempdir())
+#' interactionR_table(value)
 #' @import flextable
 #' @import officer
 #' @export
