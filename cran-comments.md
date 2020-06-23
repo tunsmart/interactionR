@@ -22,8 +22,6 @@
 
 * I have added an optional 'file_path' argument to interactionR_table(), where user can specify a directory to save the Word table instead of the working directory. If this option is not exercised, the function then seek an explicit permission to save the table in the working directory, if declined, the directory is left untouched and only prints to the console.
 
-* The interactionR_table() example uses tempdir()
-
 * Thanks
 
 
