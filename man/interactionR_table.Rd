@@ -4,14 +4,16 @@
 \alias{interactionR_table}
 \title{Publication-ready tables for effect modification and interaction analysis}
 \usage{
-interactionR_table(obj)
+interactionR_table(obj, file_path = NA)
 }
 \arguments{
 \item{obj}{An object of class 'interactionR' generated from any of the main functions in the \code{\link{interactionR}} package}
+
+\item{file_path}{An optional user-specified string representing the file path to save the generated Word table instead of the current working directory}
 }
 \value{
 saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory (with user's permission).
-It also returns an object of class flextable corresponding to the saved table.
+It also returns an object of class flextable corresponding to the saved table for further manipulation.
 }
 \description{
 Generates a publication-ready table for effect modification and interaction analysis based on Tables 1 and 3 in Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}].
