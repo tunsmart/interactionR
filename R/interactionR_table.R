@@ -29,7 +29,7 @@
 #' @import flextable
 #' @import officer
 #' @export
-interactionR_table <- function(obj) {
+interactionR_table <- function(obj, file_path = NA) {
   if (class(obj) != "interactionR") {
     stop("Argument 'obj' must be an object of class 'interactionR',
              use the interactionR() function to generate such object ")
@@ -127,20 +127,30 @@ interactionR_table <- function(obj) {
     t2 <- set_caption(t2, paste("Interaction of", beta1, "and", beta2, sep = " "))
   }
 
-
-  uprompt <- askYesNo("Do you want to save a Microsoft Word copy of the em/interaction table to your working directory?", default = FALSE)
-  #Gets permission from the user to save Word file into the working directory
-  #Default is NO
-
-  if (is.na(uprompt) || !uprompt) {
-    #if permission is declined or NA, working directory is untouched
+  if (!is.na(file_path)) {
+    #checks if user pre-specified a file path
+    path = paste(file_path, "interaction.docx", sep = "\\")
+    save_as_docx(t2, path = path)
+    print(paste("The file 'interaction_table.docx' has been saved to", file_path, sep = " "))
     print(t2)
     invisible(t2)
-  } else if (uprompt) {
-    #if permission is given (as Yes), table is saved to working directory and user is informed
-    save_as_docx(t2, path = "interaction_table.docx")
-    print(paste("The file 'interaction_table.docx' has been saved to", getwd(), sep = " "))
-    print(t2)
-    invisible(t2)
+  } else {
+    uprompt <- askYesNo("Do you want to save a Microsoft Word copy of the em/interaction table to your working directory?", default = FALSE)
+    #Gets permission from the user to save Word file into the working directory
+    #Default is NO
+
+    if (is.na(uprompt) || !uprompt) {
+      #if permission is declined or NA, working directory is untouched
+      print(t2)
+      invisible(t2)
+    } else if (uprompt) {
+      #if permission is given (as Yes), table is saved to working directory and user is informed
+      save_as_docx(t2, path = "interaction_table.docx")
+      print(paste("The file 'interaction_table.docx' has been saved to", getwd(), sep = " "))
+      print(t2)
+      invisible(t2)
+    }
+
   }
+
 }
