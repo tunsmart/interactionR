@@ -5,8 +5,10 @@
 #'
 #' @param obj An object of class 'interactionR' generated from any of the main functions in the \code{\link{interactionR}} package
 #'
+#' @param file_path An optional user-specified string representing the file path to save the generated Word table instead of the current working directory
+#'
 #' @return  saves a publication-ready microsoft word Table corresponding to Table 1 or Table 3 respectively in Knol and Vanderweele (2012) to the working directory (with user's permission).
-#' It also returns an object of class flextable corresponding to the saved table.
+#' It also returns an object of class flextable corresponding to the saved table for further manipulation.
 #'
 #' @examples
 #' library(interactionR)
