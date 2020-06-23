@@ -36,5 +36,5 @@ value <- interactionR(model.glm,
 )
 
 ## Use the tabling function to generate a table
-interactionR_table(value)
+interactionR_table(value, tempdir())
 }
