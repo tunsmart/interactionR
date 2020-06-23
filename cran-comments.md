@@ -17,10 +17,13 @@
 * This is a patch for the previously archived version of this package which was due to the archiving of a strong dependency - Huxtable. In this patch, Huxtable has been replaced with Flextable.
 
 
-## Suggested revisions from CRAN maintainer
+## Implemented revisions from CRAN maintainer's suggestions
 * I have removed the redundant "A Package for" from the title.
 
-* The example for interactionR_table() as written do not save any file in fact, nor modify in any form the home directory, it only prints to the console. This is because by design, and in line with CRAN policies, the interactionR_table() CANNOT save into the user's current working directory without the explicit permission of the user. There is a askYesNo() prompt within interactionR_table()  that defaults to FALSE/NO which interactively seeks this permission. If user chooses NO/CANCEL, no file is saved and the working directory is untouched, the function just prints the table to the console. Ditto, if user does not respond to the prompt (as is the case with the examples). However, If they choose YES, it saves the word table and informs them about this pointing them to the working directory. 
- Thanks.
+* I have added an optional 'file_path' argument to interactionR_table(), where user can specify a directory to save the Word table instead of the working directory. If this option is not exercised, the function then seek an explicit permission to save the table in the working directory, if declined, the directory is left untouched and only prints to the console.
+
+* The interactionR_table() example uses tempdir()
+
+* Thanks
 
 
