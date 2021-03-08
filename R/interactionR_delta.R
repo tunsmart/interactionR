@@ -103,8 +103,15 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
   }
   #### End of recode section ####
 
-  se_vec <- summary(model)$coefficients[, 2] # extracts the SE vector for the coefficients
-  # from the model
+  classes <- c("clogit", "coxph")
+  mod_class <- class(model)[1]
+
+  if (mod_class %in% classes) {
+    se_vec <- summary(model)$coefficients[, 3]
+  } else {
+    se_vec <- summary(model)$coefficients[, 2]
+  } # extracts the SE vector for the coefficients from the model
+
   v1 <- se_vec[beta1]^2
   v2 <- se_vec[beta2]^2
   v3 <- se_vec[beta3]^2
