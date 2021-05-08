@@ -1,7 +1,7 @@
 ## Test environments
-* local Windows 10 install, R 4.0.1
-* ubuntu 16.04.6 LTS (on travis-ci), R 4.0.0
-* OS X 10.13.6 (on travis-ci), R 4.0.1
+* local Windows 10 install, R 4.0.5
+* ubuntu 16.04.6 LTS (on travis-ci), R 4.0.5
+* OS X 10.13.6 (on travis-ci), R 4.0.5
 * win-builder (R devel)
 
 ## Additional comments
@@ -25,3 +25,10 @@
 * Thanks
 
 
+## What's new?
+* This is another patch release to fix a bug in how the 95% CI are being estimated for some of the models.
+
+
+## R CMD check results
+
+0 errors | 0 warnings | 0 note
