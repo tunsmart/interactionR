@@ -2,3 +2,4 @@ language: R
 os:
    - linux
    - osx
+osx_image: xcode11
