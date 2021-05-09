@@ -16,7 +16,7 @@ saves a publication-ready microsoft word Table corresponding to Table 1 or Table
 It also returns an object of class flextable corresponding to the saved table for further manipulation.
 }
 \description{
-Generates a publication-ready table for effect modification and interaction analysis based on Tables 1 and 3 in Knol and Vanderweele (2012) [\url{https://doi.org/10.1093/ije/dyr218}].
+Generates a publication-ready table for effect modification and interaction analysis based on Tables 1 and 3 in Knol and Vanderweele (2012) [\url{doi:10.1093/ije/dyr218}].
 Users can modify the function's output like any flextable object @seealso \code{\link[flextable]{flextable}}. The confidence intervals for additive interaction measures will be as selected from the \code{\link{interactionR}} function
 }
 \examples{

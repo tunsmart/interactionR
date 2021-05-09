@@ -14,7 +14,7 @@ A data frame with 458 observations and 3 variables:
 }
 }
 \source{
-\url{https://doi.org/10.1016/0021-9681(72)90006-9}
+\url{doi:10.1016/0021-9681(72)90006-9}
 }
 \usage{
 OCdata
