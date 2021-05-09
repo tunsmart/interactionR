@@ -9,5 +9,5 @@
 #'   \item{smk}{smoking, the second exposure}
 #'   ...
 #' }
-#' @source \url{doi:10.1016/0021-9681(72)90006-9}
+#' @source \doi{10.1016/0021-9681(72)90006-9}
 "OCdata"

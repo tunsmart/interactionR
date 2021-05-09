@@ -9,5 +9,5 @@
 #'   \item{smk}{smoking, the second exposure}
 #'   ...
 #' }
-#' @source \url{doi:10.1097/00001648-199605000-00012}
+#' @source \doi{10.1097/00001648-199605000-00012}
 "HDiscdata"

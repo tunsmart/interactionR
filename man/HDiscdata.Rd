@@ -14,7 +14,7 @@ A data frame with 458 observations and 3 variables:
 }
 }
 \source{
-\url{doi:10.1097/00001648-199605000-00012}
+\doi{10.1097/00001648-199605000-00012}
 }
 \usage{
 HDiscdata

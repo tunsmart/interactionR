@@ -1,6 +1,6 @@
 #' Publication-ready tables for effect modification and interaction analysis
 #'
-#' Generates a publication-ready table for effect modification and interaction analysis based on Tables 1 and 3 in Knol and Vanderweele (2012) [\url{doi:10.1093/ije/dyr218}].
+#' Generates a publication-ready table for effect modification and interaction analysis based on Tables 1 and 3 in Knol and Vanderweele (2012) [\doi{10.1093/ije/dyr218}].
 #' Users can modify the function's output like any flextable object @seealso \code{\link[flextable]{flextable}}. The confidence intervals for additive interaction measures will be as selected from the \code{\link{interactionR}} function
 #'
 #' @param obj An object of class 'interactionR' generated from any of the main functions in the \code{\link{interactionR}} package
