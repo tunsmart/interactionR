@@ -1,6 +1,7 @@
 ---
 output: 
- github_document
+ md_document:
+   variant: gfm
 ---
 
 ```{r, include = FALSE}
