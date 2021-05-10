@@ -105,7 +105,12 @@ such a way that the data frame can be processed by the tabling function
 
 ``` r
 interactionR_table(table_object)
-
+#> Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
+#> a flextable object.
+#> col_keys: `*`, `smk absent`, `smk present`, `Effect of smk within the strata of alc` 
+#> header has 1 row(s) 
+#> body has 9 row(s) 
+#> original dataset sample: 
 #>                                        *        smk absent        smk present
 #> 1                                   <NA>              <NA>               <NA>
 #> 2                                   <NA>       OR [95% CI]        OR [95% CI]
@@ -184,7 +189,12 @@ to that reported by Assmann et al. for this data.
 ``` r
 
 interactionR_table(table_object2)
-
+#> Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
+#> a flextable object.
+#> col_keys: `*`, `smk1 absent`, `smk1 present`, `Effect of smk1 within the strata of ns1` 
+#> header has 1 row(s) 
+#> body has 9 row(s) 
+#> original dataset sample: 
 #>                                         *       smk1 absent      smk1 present
 #> 1                                    <NA>              <NA>              <NA>
 #> 2                                    <NA>       OR [95% CI]       OR [95% CI]
@@ -233,5 +243,4 @@ issues](https://github.com/epi-zen/interactionR/issues) here on Github.
 Please consult the help files for the package within R, or ask questions
 on the [Github discussion
 board](https://github.com/epi-zen/interactionR/discussions) or contact
-the maintainer at Babatunde Alli
-[babatunde.alli@mail.mcgill.ca](babatunde.alli@mail.mcgill.ca)
+the maintainer at babatunde.alli \[at\] mail.mcgill.ca

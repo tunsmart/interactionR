@@ -130,4 +130,4 @@ For contribute to interactionR please feel free to fork the branch and send me p
 Please use [interactionR issues](https://github.com/epi-zen/interactionR/issues) here on Github.
 
 ### To get support
-Please consult the help files for the package within R, or ask questions on the [Github discussion board](https://github.com/epi-zen/interactionR/discussions) or contact the maintainer at Babatunde Alli [babatunde.alli@mail.mcgill.ca](babatunde.alli@mail.mcgill.ca) 
+Please consult the help files for the package within R, or ask questions on the [Github discussion board](https://github.com/epi-zen/interactionR/discussions) or contact the maintainer at babatunde.alli [at] mail.mcgill.ca
