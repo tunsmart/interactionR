@@ -134,7 +134,8 @@ interactionR_table <- function(obj, file_path = NA) {
     path <- paste(file_path, "interaction.docx", sep = "\\")
     save_as_docx(t2, path = path)
     print(paste("The file 'interaction_table.docx' has been saved to", file_path, sep = " "))
-    t2
+    plot(t2)
+    invisible(t2)
   } else {
     uprompt <- askYesNo("Do you want to save a Microsoft Word copy of the em/interaction table to your working directory?", default = FALSE)
     # Gets permission from the user to save Word file into the working directory
@@ -142,12 +143,14 @@ interactionR_table <- function(obj, file_path = NA) {
 
     if (is.na(uprompt) || !uprompt) {
       # if permission is declined or NA, working directory is untouched
-      t2
+      plot(t2)
+      invisible(t2)
     } else if (uprompt) {
       # if permission is given (as Yes), table is saved to working directory and user is informed
       save_as_docx(t2, path = "interaction_table.docx")
       print(paste("The file 'interaction_table.docx' has been saved to", getwd(), sep = " "))
-      t2
+      plot(t2)
+      invisible(t2)
     }
   }
 }
