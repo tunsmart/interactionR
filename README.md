@@ -1,5 +1,5 @@
-About interactionR
-==================
+
+# About interactionR
 
 [![Build
 Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://travis-ci.com/epi-zen/interactionR)
@@ -7,18 +7,14 @@ Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://t
 InteractionR allows researchers to produce publication-ready tables that
 includes all effect estimates necessary for full reporting effect
 modification and interaction analysis as recommended by Knol and
-Vanderweele (2012)
-\[<a href="doi:10.1093/ije/dyr218" class="uri">doi:10.1093/ije/dyr218</a>\].
-It also estimates confidence interval for the trio of additive
-interaction measures using the delta method (Hosmer and Lemeshow (1992),
-\[<a href="doi:10.1097/00001648-199209000-00012" class="uri">doi:10.1097/00001648-199209000-00012</a>\]),
-variance recovery method (Zou (2008),
-\[<a href="doi:10.1093/aje/kwn104" class="uri">doi:10.1093/aje/kwn104</a>\]),
-or percentile bootstrapping (Assmann et al. (1996),
-\[<a href="doi:10.1097/00001648-199605000-00012" class="uri">doi:10.1097/00001648-199605000-00012</a>\]).
+Vanderweele (2012) \[<doi:10.1093/ije/dyr218>\]. It also estimates
+confidence interval for the trio of additive interaction measures using
+the delta method (Hosmer and Lemeshow (1992),
+\[<doi:10.1097/00001648-199209000-00012>\]), variance recovery method
+(Zou (2008), \[<doi:10.1093/aje/kwn104>\]), or percentile bootstrapping
+(Assmann et al. (1996), \[<doi:10.1097/00001648-199605000-00012>\]).
 
-Installation
-============
+# Installation
 
 interactionR is on
 [CRAN](https://cran.r-project.org/package=interactionR), install using
@@ -32,14 +28,12 @@ You can also install the development version from
 devtools::install_github("epi-zen/interactionR")
 ```
 
-Implementation
-==============
+# Implementation
 
 interactionR is implemented in the R statistical software environment; R
-is installable from
-<a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>.
-The main user-facing function of the package, `interactionR()`, accepts
-the following arguments:
+is installable from <https://www.r-project.org/>. The main user-facing
+function of the package, `interactionR()`, accepts the following
+arguments:
 
 \*\*model\*: a regression model fitted by the user with interaction term
 for the two exposures under consideration. This may be an object of
@@ -64,8 +58,7 @@ exposures is protective - such that the stratum with the lowest risk
 becomes the new reference category when the two exposures are considered
 jointly (See Knol et al (2011) \[doi: 10.1007/s10654-011-9554-9\]).
 
-Example: The joint effect of alcohol and smoking on oral cancer.
-================================================================
+# Example: The joint effect of alcohol and smoking on oral cancer.
 
 Consider the case-control data from Rothman and Keller (1979) \[doi:
 10.1016/0021-9681(72)90006-9\], which studied the joint effect of
@@ -105,25 +98,26 @@ such a way that the data frame can be processed by the tabling function
 
 ``` r
 interactionR_table(table_object)
-Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
-a flextable object.
-col_keys: `*`, `smk absent`, `smk present`, `Effect of smk within the strata of alc` 
-header has 1 row(s) 
-body has 9 row(s) 
-original dataset sample: 
-                                       *        smk absent        smk present
-1                                   <NA>              <NA>               <NA>
-2                                   <NA>       OR [95% CI]        OR [95% CI]
-3                             alc absent     1 [Reference] 2.96 [0.68, 12.91]
-4                            alc present 3.33 [0.7, 15.86] 9.04 [2.64, 30.91]
-5 Effect of alc within the strata of smk 3.33 [0.7, 15.86]  3.05 [1.29, 7.18]
-  Effect of smk within the strata of alc
-1                                   <NA>
-2                            OR [95% CI]
-3                     2.96 [0.68, 12.91]
-4                         2.71 [1, 7.37]
-5                                   <NA>
 ```
+
+    Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
+    a flextable object.
+    col_keys: `*`, `smk absent`, `smk present`, `Effect of smk within the strata of alc` 
+    header has 1 row(s) 
+    body has 9 row(s) 
+    original dataset sample: 
+                                           *        smk absent        smk present
+    1                                   <NA>              <NA>               <NA>
+    2                                   <NA>       OR [95% CI]        OR [95% CI]
+    3                             alc absent     1 [Reference] 2.96 [0.68, 12.91]
+    4                            alc present 3.33 [0.7, 15.86] 9.04 [2.64, 30.91]
+    5 Effect of alc within the strata of smk 3.33 [0.7, 15.86]  3.05 [1.29, 7.18]
+      Effect of smk within the strata of alc
+    1                                   <NA>
+    2                            OR [95% CI]
+    3                     2.96 [0.68, 12.91]
+    4                         2.71 [1, 7.37]
+    5                                   <NA>
 
 The tabling function will generate and save a publication-ready table as
 a word document to the user’s working directory, if desired. The
@@ -139,8 +133,7 @@ The latter implements the percentile bootstrapping of CIs of additive
 interaction measures as described by Assmann et al, with usage shown in
 the next example.
 
-Example 2: Effect of sports participation and smoking on herniated lumbar disc.
-===============================================================================
+# Example 2: Effect of sports participation and smoking on herniated lumbar disc.
 
 To illustrate the interactionR\_boot() function, consider the
 case-control data of the effect of sports participation and smoking on
@@ -173,10 +166,10 @@ m2 = glm(h ~ ns*smk, family = binomial(link = 'logit'), data = HDiscdata)
 Then, pass the object to the `interactionR_boot()` function as follows:
 
 ``` r
-
 table_object2 = interactionR_boot(m2, ci.level = 0.95, em = F, recode = F, seed = 12345, s = 1000)
-Loading required namespace: boot
 ```
+
+    Loading required namespace: boot
 
 This runs a non-parametric bootstrap sample 1000 times with replacements
 and a percentile CI. The function also returns a list object of class
@@ -187,34 +180,33 @@ publication-ready table with estimates for the CI of RERI and AP similar
 to that reported by Assmann et al. for this data.
 
 ``` r
-
 interactionR_table(table_object2)
-Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
-a flextable object.
-col_keys: `*`, `smk1 absent`, `smk1 present`, `Effect of smk1 within the strata of ns1` 
-header has 1 row(s) 
-body has 9 row(s) 
-original dataset sample: 
-                                        *       smk1 absent      smk1 present
-1                                    <NA>              <NA>              <NA>
-2                                    <NA>       OR [95% CI]       OR [95% CI]
-3                              ns1 absent     1 [Reference] 1.88 [1.29, 2.73]
-4                             ns1 present 2.38 [1.27, 4.46] 1.98 [1.12, 3.48]
-5 Effect of ns1 within the strata of smk1 2.38 [1.27, 4.46] 1.05 [0.61, 1.83]
-  Effect of smk1 within the strata of ns1
-1                                    <NA>
-2                             OR [95% CI]
-3                       1.88 [1.29, 2.73]
-4                       0.83 [0.39, 1.75]
-5                                    <NA>
 ```
+
+    Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
+    a flextable object.
+    col_keys: `*`, `smk1 absent`, `smk1 present`, `Effect of smk1 within the strata of ns1` 
+    header has 1 row(s) 
+    body has 9 row(s) 
+    original dataset sample: 
+                                            *       smk1 absent      smk1 present
+    1                                    <NA>              <NA>              <NA>
+    2                                    <NA>       OR [95% CI]       OR [95% CI]
+    3                              ns1 absent     1 [Reference] 1.88 [1.29, 2.73]
+    4                             ns1 present 2.38 [1.27, 4.46] 1.98 [1.12, 3.48]
+    5 Effect of ns1 within the strata of smk1 2.38 [1.27, 4.46] 1.05 [0.61, 1.83]
+      Effect of smk1 within the strata of ns1
+    1                                    <NA>
+    2                             OR [95% CI]
+    3                       1.88 [1.29, 2.73]
+    4                       0.83 [0.39, 1.75]
+    5                                    <NA>
 
 Furthermore, some base R functions are available to the user to further
 manipulate some parts of the output object from interactionR\_boot(). A
 simple example is:
 
 ``` r
-
 hist(table_object2$bootstrap)
 ```
 
@@ -224,8 +216,7 @@ This produce histograms of the distribution of each of the three
 bootstrapped parameters (RERI, AP and SI), allowing the user to inspect
 the overall performance and accuracy of the returned estimates.
 
-Community guidelines
-====================
+# Community guidelines
 
 ### To contribute
 
