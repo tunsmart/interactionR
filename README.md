@@ -105,24 +105,24 @@ such a way that the data frame can be processed by the tabling function
 
 ``` r
 interactionR_table(table_object)
-#> Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
-#> a flextable object.
-#> col_keys: `*`, `smk absent`, `smk present`, `Effect of smk within the strata of alc` 
-#> header has 1 row(s) 
-#> body has 9 row(s) 
-#> original dataset sample: 
-#>                                        *        smk absent        smk present
-#> 1                                   <NA>              <NA>               <NA>
-#> 2                                   <NA>       OR [95% CI]        OR [95% CI]
-#> 3                             alc absent     1 [Reference] 2.96 [0.68, 12.91]
-#> 4                            alc present 3.33 [0.7, 15.86] 9.04 [2.64, 30.91]
-#> 5 Effect of alc within the strata of smk 3.33 [0.7, 15.86]  3.05 [1.29, 7.18]
-#>   Effect of smk within the strata of alc
-#> 1                                   <NA>
-#> 2                            OR [95% CI]
-#> 3                     2.96 [0.68, 12.91]
-#> 4                         2.71 [1, 7.37]
-#> 5                                   <NA>
+Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
+a flextable object.
+col_keys: `*`, `smk absent`, `smk present`, `Effect of smk within the strata of alc` 
+header has 1 row(s) 
+body has 9 row(s) 
+original dataset sample: 
+                                       *        smk absent        smk present
+1                                   <NA>              <NA>               <NA>
+2                                   <NA>       OR [95% CI]        OR [95% CI]
+3                             alc absent     1 [Reference] 2.96 [0.68, 12.91]
+4                            alc present 3.33 [0.7, 15.86] 9.04 [2.64, 30.91]
+5 Effect of alc within the strata of smk 3.33 [0.7, 15.86]  3.05 [1.29, 7.18]
+  Effect of smk within the strata of alc
+1                                   <NA>
+2                            OR [95% CI]
+3                     2.96 [0.68, 12.91]
+4                         2.71 [1, 7.37]
+5                                   <NA>
 ```
 
 The tabling function will generate and save a publication-ready table as
@@ -175,7 +175,7 @@ Then, pass the object to the `interactionR_boot()` function as follows:
 ``` r
 
 table_object2 = interactionR_boot(m2, ci.level = 0.95, em = F, recode = F, seed = 12345, s = 1000)
-#> Loading required namespace: boot
+Loading required namespace: boot
 ```
 
 This runs a non-parametric bootstrap sample 1000 times with replacements
@@ -189,24 +189,24 @@ to that reported by Assmann et al. for this data.
 ``` r
 
 interactionR_table(table_object2)
-#> Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
-#> a flextable object.
-#> col_keys: `*`, `smk1 absent`, `smk1 present`, `Effect of smk1 within the strata of ns1` 
-#> header has 1 row(s) 
-#> body has 9 row(s) 
-#> original dataset sample: 
-#>                                         *       smk1 absent      smk1 present
-#> 1                                    <NA>              <NA>              <NA>
-#> 2                                    <NA>       OR [95% CI]       OR [95% CI]
-#> 3                              ns1 absent     1 [Reference] 1.88 [1.29, 2.73]
-#> 4                             ns1 present 2.38 [1.27, 4.46] 1.98 [1.12, 3.48]
-#> 5 Effect of ns1 within the strata of smk1 2.38 [1.27, 4.46] 1.05 [0.61, 1.83]
-#>   Effect of smk1 within the strata of ns1
-#> 1                                    <NA>
-#> 2                             OR [95% CI]
-#> 3                       1.88 [1.29, 2.73]
-#> 4                       0.83 [0.39, 1.75]
-#> 5                                    <NA>
+Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
+a flextable object.
+col_keys: `*`, `smk1 absent`, `smk1 present`, `Effect of smk1 within the strata of ns1` 
+header has 1 row(s) 
+body has 9 row(s) 
+original dataset sample: 
+                                        *       smk1 absent      smk1 present
+1                                    <NA>              <NA>              <NA>
+2                                    <NA>       OR [95% CI]       OR [95% CI]
+3                              ns1 absent     1 [Reference] 1.88 [1.29, 2.73]
+4                             ns1 present 2.38 [1.27, 4.46] 1.98 [1.12, 3.48]
+5 Effect of ns1 within the strata of smk1 2.38 [1.27, 4.46] 1.05 [0.61, 1.83]
+  Effect of smk1 within the strata of ns1
+1                                    <NA>
+2                             OR [95% CI]
+3                       1.88 [1.29, 2.73]
+4                       0.83 [0.39, 1.75]
+5                                    <NA>
 ```
 
 Furthermore, some base R functions are available to the user to further
