@@ -32,17 +32,17 @@ devtools::install_github("epi-zen/interactionR")
 
 interactionR is implemented in the R statistical software environment; R is installable from https://www.r-project.org/. The main user-facing function of the package, `interactionR()`, accepts the following arguments: 
 
-**model*: a regression model fitted by the user with interaction term for the two exposures under consideration. This may be an object of class glm with a valid link for logistic regression or approximants of risk ratio, class clogit or class coxph. It can also include confounders adjustment as is usually the case.
+*model: a regression model fitted by the user with interaction term for the two exposures under consideration. This may be an object of class glm with a valid link for logistic regression or approximants of risk ratio, class clogit or class coxph. It can also include confounders adjustment as is usually the case.
 
-**exposure_names*: A character vector of two named binary exposure variables present in the fitted model. 
+*exposure_names: A character vector of two named binary exposure variables present in the fitted model. 
 
-**ci.type*: A character string ("delta" or "mover") specifying the method to use for the estimation of CI for the measures of additive interaction. Default is "delta".
+*ci.type: A character string ("delta" or "mover") specifying the method to use for the estimation of CI for the measures of additive interaction. Default is "delta".
 
-**ci.level*: Magnitude of the returned CI level.
+*ci.level: Magnitude of the returned CI level.
 
-**em*: TRUE, for effect modification assessment. FALSE, for interaction.
+*em: TRUE, for effect modification assessment. FALSE, for interaction.
 
-**recode*: If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly (See Knol et al (2011) [doi: 10.1007/s10654-011-9554-9]).
+*recode: If TRUE, recodes the exposures - if at least one of the exposures is protective - such that the stratum with the lowest risk becomes the new reference category when the two exposures are considered jointly (See Knol et al (2011) [doi: 10.1007/s10654-011-9554-9]).
 
 
 # Example: The joint effect of alcohol and smoking on oral cancer. 
@@ -77,13 +77,13 @@ In addition to the main function described above, the package also provides stan
 
 To illustrate the interactionR_boot() function, consider the case-control data of the effect of sports participation and smoking on herniated lumbar disc examined by Assmann et al. in their analysis. The dataset is available in the package as ‘HDiscdata’ and contains three binary variables: i) the outcome. herniated lumbar disc, ‘h’; and ii & iii) the exposures sports participation, ‘ns’, and smoking ‘smk’. The function accepts the following arguments:
 
-**model*: A fitted model of class glm. Requires the exposures with interaction term to be listed first before any other covariates/confounders (if applicable).
+*model: A fitted model of class glm. Requires the exposures with interaction term to be listed first before any other covariates/confounders (if applicable).
 
-**ci.level*; *em*; *recode*: As previously described for `interactionR()`.
+*ci.level; em; recode: As previously described for `interactionR()`.
 
-**seed*: The random number seed to use for generating the bootstrap samples (for reproducibility). Default is 12345 but can be set to any number.
+*seed: The random number seed to use for generating the bootstrap samples (for reproducibility). Default is 12345 but can be set to any number.
 
-**s*: Number of bootstrap resampling. Default is 1000 
+*s: Number of bootstrap resampling. Default is 1000 
 
 Again, we start by fitting a logistic regression model:
 
