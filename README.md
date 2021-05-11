@@ -34,22 +34,23 @@ is installable from <https://www.r-project.org/>. The main user-facing
 function of the package, `interactionR()`, accepts the following
 arguments:
 
-\*model: a regression model fitted by the user with interaction term for
-the two exposures under consideration. This may be an object of class
-glm with a valid link for logistic regression or approximants of risk
-ratio, class clogit or class coxph. It can also include confounders
-adjustment as is usually the case.
+  - *model*: a regression model fitted by the user with interaction term
+    for the two exposures under consideration. This may be an object of
+    class glm with a valid link for logistic regression or approximants
+    of risk ratio, class clogit or class coxph. It can also include
+    confounders adjustment as is usually the case.
 
-\*exposure\_names: A character vector of two named binary exposure
-variables present in the fitted model.
+  - *exposure\_names*: A character vector of two named binary exposure
+    variables present in the fitted model.
 
-\*ci.type: A character string (“delta” or “mover”) specifying the method
-to use for the estimation of CI for the measures of additive
-interaction. Default is “delta”.
+  - *ci.type*: A character string (“delta” or “mover”) specifying the
+    method to use for the estimation of CI for the measures of additive
+    interaction. Default is “delta”.
 
-\*ci.level: Magnitude of the returned CI level.
+  - *ci.level*: Magnitude of the returned CI level.
 
-\*em: TRUE, for effect modification assessment. FALSE, for interaction.
+  - *em*: TRUE, for effect modification assessment. FALSE, for
+    interaction.
 
 \*recode: If TRUE, recodes the exposures - if at least one of the
 exposures is protective - such that the stratum with the lowest risk
@@ -97,6 +98,7 @@ such a way that the data frame can be processed by the tabling function
 ``` r
 interactionR_table(table_object)
 ```
+
 <img src="man/figures/Figure-1.png" width="100%" />
 
 The tabling function will generate and save a publication-ready table as
@@ -123,17 +125,18 @@ binary variables: i) the outcome. herniated lumbar disc, ‘h’; and ii &
 iii) the exposures sports participation, ‘ns’, and smoking ‘smk’. The
 function accepts the following arguments:
 
-\*model: A fitted model of class glm. Requires the exposures with
-interaction term to be listed first before any other
-covariates/confounders (if applicable).
+  - *model*: A fitted model of class glm. Requires the exposures with
+    interaction term to be listed first before any other
+    covariates/confounders (if applicable).
 
-\*ci.level; em; recode: As previously described for `interactionR()`.
+  - *ci.level*; *em*; *recode*: As previously described for
+    `interactionR()`.
 
-\*seed: The random number seed to use for generating the bootstrap
-samples (for reproducibility). Default is 12345 but can be set to any
-number.
+  - *seed*: The random number seed to use for generating the bootstrap
+    samples (for reproducibility). Default is 12345 but can be set to
+    any number.
 
-\*s: Number of bootstrap resampling. Default is 1000
+  - *s*: Number of bootstrap resampling. Default is 1000
 
 Again, we start by fitting a logistic regression model:
 
@@ -161,8 +164,8 @@ to that reported by Assmann et al. for this data.
 ``` r
 interactionR_table(table_object2)
 ```
-<img src="man/figures/Figure-2.png" width="100%" />
 
+<img src="man/figures/Figure-2.png" width="100%" />
 Furthermore, some base R functions are available to the user to further
 manipulate some parts of the output object from interactionR\_boot(). A
 simple example is:
@@ -171,7 +174,7 @@ simple example is:
 hist(table_object2$bootstrap)
 ```
 
-<img src="man/figures/README-example7-1.png" width="100%" />
+<img src="man/figures/README-example7-2.png" width="100%" />
 
 This produce histograms of the distribution of each of the three
 bootstrapped parameters (RERI, AP and SI), allowing the user to inspect
