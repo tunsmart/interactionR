@@ -53,7 +53,7 @@ second exposure, while interaction is the causal effect of two exposures
 together on an outcome. For an effect modification analysis with three
 dichotomous variables: the effect of exposure A on an outcome Y and a
 putative modifying variable M of this effect, they recommended reporting
-mainly the following (\autoref{Table 1}a):
+mainly the following (Table 1a):
 
 1.  Individual (A on Y (OR01) and M on Y (OR10)) and joint effect
     estimates (A and M on Y (OR11)) with confidence intervals (CI) ,
@@ -64,12 +64,12 @@ mainly the following (\autoref{Table 1}a):
 
 If interaction of A and M on Y is of interest, then to report in
 addition to the above, estimates and CI of the effect of M on Y within
-the strata of A (\autoref{Table 1}b). Presenting the results this way allows the
+the strata of A (Table 1b). Presenting the results this way allows the
 reader to fully interpret all dimensions of interaction [@knol:2012].
 
 Table 1: Recommended presentation formats for effect modification and
 interaction analyses
-![\label{Table 1}](Table.png)
+![](Table.png)
 
 Fitting a regression model in R will produce some direct estimates
 required to populate Figure 1; however, estimates such as RERI, OR<sub>A=1</sub> <sub>vs</sub> <sub>A=0</sub>[M = 1], OR<sub>M=1</sub> <sub>vs</sub> <sub>M=0</sub>[A = 1] and their CIs are not
