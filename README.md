@@ -52,7 +52,7 @@ arguments:
   - *em*: TRUE, for effect modification assessment. FALSE, for
     interaction.
 
-\*recode: If TRUE, recodes the exposures - if at least one of the
+  -*recode*: If TRUE, recodes the exposures - if at least one of the
 exposures is protective - such that the stratum with the lowest risk
 becomes the new reference category when the two exposures are considered
 jointly (See Knol et al (2011) \[doi: 10.1007/s10654-011-9554-9\]).
@@ -174,7 +174,7 @@ simple example is:
 hist(table_object2$bootstrap)
 ```
 
-<img src="man/figures/README-example7-2.png" width="100%" />
+<img src="man/figures/README-example7-1.png" width="100%" />
 
 This produce histograms of the distribution of each of the three
 bootstrapped parameters (RERI, AP and SI), allowing the user to inspect
