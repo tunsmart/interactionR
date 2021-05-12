@@ -14,7 +14,7 @@ affiliations:
   index: 1
 citation_author: Alli.
 authors:
-- name: Babatunde Yusuf Alli
+- name: Babatunde Y. Alli
   orcid: 0000-0002-9687-7864
   affiliation: 1
 year: 2021
@@ -40,7 +40,7 @@ asymptotic delta method, the package also allows for estimation of CIs
 for additive interaction measures using the variance recovery and
 percentile bootstrapping methods.
 
-Statement of needs
+Statement of need
 ==================
 
 Although, effect modification analysis is ubiquitous in the
@@ -82,8 +82,8 @@ interaction analyses
 ![](Table.png)
 
 Fitting a regression model in R will produce some direct estimates
-required to populate Figure 1; however, estimates such as RERI, OR~A=1
-vs A=0~ \[M = 1\], OR~M=1 vs M=0~ \[A = 1\] and their CIs are not
+required to populate Figure 1; however, estimates such as RERI, OR<sub>A=1
+vs A=0</sub>[M = 1], OR<sub>M=1 vs M=0</sub>[A = 1] and their CIs are not
 readily available from the standard output of the regression model and
 need to be produced with additional methods and coding. These additional
 steps required may deter the more parsimonious authors from full
