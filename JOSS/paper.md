@@ -72,7 +72,7 @@ interaction analyses
 ![\label{Table 1}](Table.png)
 
 Fitting a regression model in R will produce some direct estimates
-required to populate Figure 1; however, estimates such as RERI, OR<sub>A=1 <sub>vs</sub> <sub>A=0</sub>[M = 1], OR<sub>M=1</sub> <sub>vs</sub> <sub>M=0</sub>[A = 1] and their CIs are not
+required to populate Figure 1; however, estimates such as RERI, OR<sub>A=1</sub> <sub>vs</sub> <sub>A=0</sub>[M = 1], OR<sub>M=1</sub> <sub>vs</sub> <sub>M=0</sub>[A = 1] and their CIs are not
 readily available from the standard output of the regression model and
 need to be produced with additional methods and coding. These additional
 steps required may deter the more parsimonious authors from full
