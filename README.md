@@ -2,6 +2,9 @@
 
 [![Build
 Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://travis-ci.com/epi-zen/interactionR)
+[![](https://www.r-pkg.org/badges/version/interactionR)](https://cran.r-project.org/package=interactionR)
+![Downloads](https://cranlogs.r-pkg.org/badges/interactionR)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/interactionR)](https://cran.r-project.org/package=interactionR)
 
 InteractionR allows researchers to produce publication-ready tables that
 includes all effect estimates necessary for full reporting effect
