@@ -4,7 +4,7 @@
 \alias{interactionR_table}
 \title{Publication-ready tables for effect modification and interaction analysis}
 \usage{
-interactionR_table(obj, file_path = NA)
+interactionR_table(obj, p.value = FALSE, file_path = NA)
 }
 \arguments{
 \item{obj}{An object of class 'interactionR' generated from any of the main functions in the \code{\link{interactionR}} package}

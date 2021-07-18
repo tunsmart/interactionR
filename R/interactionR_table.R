@@ -36,9 +36,7 @@ interactionR_table <- function(obj, p.value = FALSE, file_path = NA) {
     stop("Argument 'obj' must be an object of class 'interactionR',
              use the interactionR() function to generate such object ")
   }
-  if (p.value & !"p" %in% names(obj$dframe)) {
-    stop("Argument 'p.value' should be FALSE when 'obj' does not include p values. Only the 'interactionR_delta()' function is currently supported for p values estimation' ")
-  }
+
   beta1 <- obj$exp_names[1]
   beta2 <- obj$exp_names[2]
   em <- obj$analysis
