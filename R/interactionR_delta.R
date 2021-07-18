@@ -116,6 +116,9 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
   v2 <- se_vec[beta2]^2
   v3 <- se_vec[beta3]^2
 
+  #Extracts p-values from the model
+  pvals <- summary(model)$coefficients[,'Pr(>|z|)']
+
   ### Extracts the variance-covariance matrix from the model### for use in
   ### the delta method CI estimation for RERI and AP###
   v_cov <- vcov(model)
@@ -134,28 +137,37 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
   OR10 <- as.numeric(exp(b1))
   CI.ll_OR10 <- exp(confint.default(model)[beta1, 1])
   CI.ul_OR10 <- exp(confint.default(model)[beta1, 2]) # This is also OR of X on D (A==0)
+  p.OR10 <- pvals[beta1]
   OR01 <- as.numeric(exp(b2))
   CI.ll_OR01 <- exp(confint.default(model)[beta2, 1])
   CI.ul_OR01 <- exp(confint.default(model)[beta2, 2]) # This is also OR of A on D (X==0)
+  p.OR01 <- pvals[beta2]
   OR11 <- as.numeric(exp(b1 + b2 + b3))
   CI.ll_OR11 <- exp(b1 + b2 + b3 - z * sqrt(v123))
   CI.ul_OR11 <- exp(b1 + b2 + b3 + z * sqrt(v123))
+  q1 <- abs(log(OR11)/sqrt(v123))
+  p.OR11 <- exp(-0.717*q1 - 0.416*q1^2) #see BMJ 2011;343:d2304
 
   ### Estimates the effect (and CI) of A on D (X==1) ###
   OR_X1 <- as.numeric(exp(b2 + b3)) # OR of A on D (X==1)
-  CI.ll_OR_X1 <- exp(b2 + b3) * exp(-z * sqrt(v23))
-  CI.ul_OR_X1 <- exp(b2 + b3) * exp(z * sqrt(v23))
+  CI.ll_OR_X1 <- exp(b2 + b3 - z * sqrt(v23))
+  CI.ul_OR_X1 <- exp(b2 + b3 + z * sqrt(v23))
+  q2 <- abs(log(OR_X1)/sqrt(v23))
+  p.OR_X1 <- exp(-0.717*q2 - 0.416*q2^2)
 
 
   ### Estimates the effect (and CI) of X on D (A==1) ###
   OR_A1 <- as.numeric(exp(b1 + b3)) # OR of X on D (A==1)
   CI.ll_OR_A1 <- exp(b1 + b3 - z * sqrt(v13))
   CI.ul_OR_A1 <- exp(b1 + b3 + z * sqrt(v13))
+  q3 <- abs(log(OR_A1)/sqrt(v13))
+  p.OR_A1 <- exp(-0.717*q3 - 0.416*q3^2)
 
   # Effect modification on the multiplicative scale and CI
   OR_M <- as.numeric(exp(b3))
   CI.ll_OR_M <- exp(confint.default(model)[beta3, 1])
   CI.ul_OR_M <- exp(confint.default(model)[beta3, 2])
+  p.OR_M <- pvals[beta3]
 
 
   # Estimates measures of effect modification on the additive scale and
@@ -169,6 +181,7 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
     1, mean = c(b1, b2, b3), cov = v_cov1)
   CI.ll_RERI <- RERI - z * se_RERI
   CI.ul_RERI <- RERI + z * se_RERI
+  p.RERI <- 1 - pnorm(RERI/se_RERI)
 
   # AP, CI and p-value
   AP <- RERI / OR11
@@ -176,6 +189,7 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
     x2 + x3), mean = c(b1, b2, b3), cov = v_cov1)
   CI.ll_AP <- AP - z * se_AP
   CI.ul_AP <- AP + z * se_AP
+  p.AP <- 1 - pnorm(abs(AP)/se_AP)
 
 
   # SI, CI and p-value
@@ -186,6 +200,7 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
 
   CI.ll_SI <- exp(lnSI - z * se_SI)
   CI.ul_SI <- exp(lnSI + z * se_SI)
+  p.SI <- NA
 
   d <- data.frame(Measures = c(
     "OR00", "OR01", "OR10", "OR11", paste("OR(",
@@ -206,6 +221,8 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
     NA,
     CI.ul_OR01, CI.ul_OR10, CI.ul_OR11, CI.ul_OR01, CI.ul_OR_X1, CI.ul_OR_M,
     CI.ul_RERI, CI.ul_AP
+  ), p = c(
+    NA, p.OR01, p.OR10, p.OR11, p.OR01, p.OR_X1, p.OR_M, p.RERI, p.AP
   ))
   rownames(d) <- NULL
 
@@ -239,6 +256,9 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
       NA, CI.ul_OR01, CI.ul_OR10, CI.ul_OR11,
       CI.ul_OR01, CI.ul_OR_X1, CI.ul_OR10, CI.ul_OR_A1, CI.ul_OR_M,
       CI.ul_RERI, CI.ul_AP, CI.ul_SI
+    ), p = c(
+      NA, p.OR01, p.OR10, p.OR11, p.OR01, p.OR_X1, p.OR10, p.OR_A1,
+      p.OR_M, p.RERI, p.AP, p.SI
     ))
     rownames(d) <- NULL
   }
@@ -249,6 +269,8 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
   if (exists("dat.ir")) {
     raw_data <- dat.ir
   }
+  #d$p = ifelse(d$p < 0.001, "<0.001", round(d$p, 8))
+  d$p = round(d$p, 6)
 
   ir <- list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call, dat = raw_data)
   attr(ir, "class") <- "interactionR"

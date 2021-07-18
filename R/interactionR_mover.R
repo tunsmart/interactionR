@@ -118,6 +118,9 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
   v2 <- se_vec[beta2]^2
   v3 <- se_vec[beta3]^2
 
+  #Extracts p-values from the model
+  pvals <- summary(model)$coefficients[,'Pr(>|z|)']
+
   ### Extracts the variance-covariance matrix from the model### for use in
   ### the delta method CI estimation for RERI and AP###
   v_cov <- vcov(model)
@@ -136,28 +139,37 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
   OR10 <- as.numeric(exp(b1))
   l1 <- exp(confint.default(model)[beta1, 1])
   u1 <- exp(confint.default(model)[beta1, 2]) # This is also OR of X on D (A==0)
+  p.OR10 <- pvals[beta1]
   OR01 <- as.numeric(exp(b2))
   l2 <- exp(confint.default(model)[beta2, 1])
   u2 <- exp(confint.default(model)[beta2, 2]) # This is also OR of A on D (X==0)
+  p.OR01 <- pvals[beta2]
   OR11 <- as.numeric(exp(b1 + b2 + b3))
   l3 <- exp(b1 + b2 + b3 - z * sqrt(v123))
   u3 <- exp(b1 + b2 + b3 + z * sqrt(v123))
+  q1 <- abs(log(OR11)/sqrt(v123))
+  p.OR11 <- exp(-0.717*q1 - 0.416*q1^2) #see BMJ 2011;343:d2304
 
   ### Estimates the effect (and CI) of A on D (X==1) ###
   OR_X1 <- as.numeric(exp(b2 + b3)) # OR of A on D (X==1)
   CI.ll_OR_X1 <- exp(b2 + b3 - z * sqrt(v23))
   CI.ul_OR_X1 <- exp(b2 + b3 + z * sqrt(v23))
+  q2 <- abs(log(OR_X1)/sqrt(v23))
+  p.OR_X1 <- exp(-0.717*q2 - 0.416*q2^2)
 
 
   ### Estimates the effect (and CI) of X on D (A==1) ###
   OR_A1 <- as.numeric(exp(b1 + b3)) # OR of X on D (A==1)
   CI.ll_OR_A1 <- exp(b1 + b3 - z * sqrt(v13))
   CI.ul_OR_A1 <- exp(b1 + b3 + z * sqrt(v13))
+  q3 <- abs(log(OR_A1)/sqrt(v13))
+  p.OR_A1 <- exp(-0.717*q3 - 0.416*q3^2)
 
   # Effect modification on the multiplicative scale and CI
   OR_M <- as.numeric(exp(b3))
   CI.ll_OR_M <- exp(confint.default(model)[beta3, 1])
   CI.ul_OR_M <- exp(confint.default(model)[beta3, 2])
+  p.OR_M <- pvals[beta3]
 
 
   # Estimates measures of effect modification on the additive scale and
@@ -179,6 +191,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
 
   L <- 1 + OR11 - OR10 - OR01 - p6
 
+
   k1 <- (u3 - OR11)^2 + (OR10 - l1)^2 + (OR01 - l2)^2
   k2 <- 2 * r12 * (u3 - OR11) * (OR10 - l1)
   k3 <- 2 * r13 * (u3 - OR11) * (OR01 - l2)
@@ -186,6 +199,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
   k5 <- (k1 - k2 - k3 + k4)^0.5
 
   U <- 1 + OR11 - OR10 - OR01 + k5
+  p.RERI <- NA
 
 
   # AP, CI and p-value
@@ -222,6 +236,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
   APk5 <- (APk1 - APk2 - APk3 + APk4)^0.5
 
   APU <- 1 + theta1 - theta2 - theta3 + APk5
+  p.AP <- NA
 
 
   # SI, CI and p-value
@@ -229,6 +244,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
   SItheta2 <- log((exp(b1) + exp(b2) - 2))
   lnSI <- SItheta1 - SItheta2
   SI <- exp(lnSI)
+
 
   vSItheta1 <- (exp(b1 + b2 + b3) / (exp(b1 + b2 + b3) - 1))^2 * v123
   vSItheta2 <- ((exp(2 * b1) * v1) + (exp(2 * b2) * v2) + (2 * exp(b1 +
@@ -248,6 +264,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
     (-SItheta2))^2 + (2 * SIr * (SIu1 - SItheta1) * ((-SIu2) - (-SItheta2))))
   SIL <- exp(lnSIL)
   SIU <- exp(lnSIU)
+  p.SI <- NA
 
   d <- data.frame(
     Measures = c(
@@ -263,8 +280,10 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
       OR00, OR01, OR10, OR11, OR01, OR_X1, OR_M,
       RERI
     ), CI.ll = c(NA, l2, l1, l3, l2, CI.ll_OR_X1, CI.ll_OR_M, L),
-    CI.ul = c(NA, u2, u1, u3, u2, CI.ul_OR_X1, CI.ul_OR_M, U)
-  )
+    CI.ul = c(NA, u2, u1, u3, u2, CI.ul_OR_X1, CI.ul_OR_M, U
+  ), p = c(
+    NA, p.OR01, p.OR10, p.OR11, p.OR01, p.OR_X1, p.OR_M, p.RERI
+  ))
   rownames(d) <- NULL
 
 
@@ -294,6 +313,9 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
     ), CI.ul = c(
       NA, u2, u1, u3, u2, CI.ul_OR_X1, u1, CI.ul_OR_A1,
       CI.ul_OR_M, U, APU, SIU
+    ), p = c(
+      NA, p.OR01, p.OR10, p.OR11, p.OR01, p.OR_X1, p.OR10, p.OR_A1,
+      p.OR_M, p.RERI, p.AP, p.SI
     ))
     rownames(d) <- NULL
   }

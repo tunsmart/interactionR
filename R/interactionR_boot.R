@@ -127,28 +127,37 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
   OR10 <- as.numeric(exp(b1))
   CI.ll_OR10 <- exp(confint.default(model)[beta1, 1])
   CI.ul_OR10 <- exp(confint.default(model)[beta1, 2]) # This is also OR of X on D (A==0)
+  p.OR10 <- pvals[beta1]
   OR01 <- as.numeric(exp(b2))
   CI.ll_OR01 <- exp(confint.default(model)[beta2, 1])
   CI.ul_OR01 <- exp(confint.default(model)[beta2, 2]) # This is also OR of A on D (X==0)
+  p.OR01 <- pvals[beta2]
   OR11 <- as.numeric(exp(b1 + b2 + b3))
   CI.ll_OR11 <- exp(b1 + b2 + b3 - z * sqrt(v123))
   CI.ul_OR11 <- exp(b1 + b2 + b3 + z * sqrt(v123))
+  q1 <- abs(log(OR11)/sqrt(v123))
+  p.OR11 <- exp(-0.717*q1 - 0.416*q1^2) #see BMJ 2011;343:d2304
 
   ### Estimates the effect (and CI) of A on D (X==1) ###
   OR_X1 <- as.numeric(exp(b2 + b3)) # OR of A on D (X==1)
   CI.ll_OR_X1 <- exp(b2 + b3) * exp(-z * sqrt(v23))
   CI.ul_OR_X1 <- exp(b2 + b3) * exp(z * sqrt(v23))
+  q2 <- abs(log(OR_X1)/sqrt(v23))
+  p.OR_X1 <- exp(-0.717*q2 - 0.416*q2^2)
 
 
   ### Estimates the effect (and CI) of X on D (A==1) ###
   OR_A1 <- as.numeric(exp(b1 + b3)) # OR of X on D (A==1)
   CI.ll_OR_A1 <- exp(b1 + b3 - z * sqrt(v13))
   CI.ul_OR_A1 <- exp(b1 + b3 + z * sqrt(v13))
+  q3 <- abs(log(OR_A1)/sqrt(v13))
+  p.OR_A1 <- exp(-0.717*q3 - 0.416*q3^2)
 
   # Effect modification on the multiplicative scale and CI
   OR_M <- as.numeric(exp(b3))
   CI.ll_OR_M <- exp(confint.default(model)[beta3, 1])
   CI.ul_OR_M <- exp(confint.default(model)[beta3, 2])
+  p.OR_M <- pvals[beta3]
 
   set.seed(seed)
   b <- car::Boot(model, f = trio, R = s, method = c("case"))
@@ -158,14 +167,18 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
   RERI <- bmatrix[1, 1]
   CI.ll_RERI <- bmatrix[1, 2]
   CI.ul_RERI <- bmatrix[1, 3]
+  p.RERI <- NA
 
   AP <- bmatrix[2, 1]
   CI.ll_AP <- bmatrix[2, 2]
   CI.ul_AP <- bmatrix[2, 3]
+  p.AP <- NA
 
   SI <- bmatrix[3, 1]
   CI.ll_SI <- bmatrix[3, 2]
   CI.ul_SI <- bmatrix[3, 3]
+  p.SI <- NA
+
 
   d <- data.frame(Measures = c(
     "OR00", "OR01", "OR10", "OR11", paste("OR(",
@@ -186,6 +199,8 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
     NA,
     CI.ul_OR01, CI.ul_OR10, CI.ul_OR11, CI.ul_OR01, CI.ul_OR_X1, CI.ul_OR_M,
     CI.ul_RERI, CI.ul_AP
+  ), p = c(
+    NA, p.OR01, p.OR10, p.OR11, p.OR01, p.OR_X1, p.OR_M, p.RERI, p.AP
   ))
   rownames(d) <- NULL
 
@@ -219,6 +234,9 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
       NA, CI.ul_OR01, CI.ul_OR10, CI.ul_OR11,
       CI.ul_OR01, CI.ul_OR_X1, CI.ul_OR10, CI.ul_OR_A1, CI.ul_OR_M,
       CI.ul_RERI, CI.ul_AP, CI.ul_SI
+    ), p = c(
+      NA, p.OR01, p.OR10, p.OR11, p.OR01, p.OR_X1, p.OR10, p.OR_A1,
+      p.OR_M, p.RERI, p.AP, p.SI
     ))
     rownames(d) <- NULL
   }
