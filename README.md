@@ -5,6 +5,8 @@ Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://t
 [![](https://www.r-pkg.org/badges/version/interactionR)](https://cran.r-project.org/package=interactionR)
 ![Downloads](https://cranlogs.r-pkg.org/badges/interactionR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/interactionR)](https://cran.r-project.org/package=interactionR)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4924045.svg)](https://doi.org/10.5281/zenodo.4924045)
+
 
 InteractionR allows researchers to produce publication-ready tables that
 includes all effect estimates necessary for full reporting effect
@@ -183,6 +185,9 @@ This produce histograms of the distribution of each of the three
 bootstrapped parameters (RERI, AP and SI), allowing the user to inspect
 the overall performance and accuracy of the returned estimates.
 
+# To cite
+Cite as: Babatunde Y. Alli. interactionR: An R package for full reporting of effect modification and interaction. Epub ahead of print June 10, 2021. DOI: 10.5281/zenodo.4924045.
+
 # Community guidelines
 
 ### To contribute
@@ -202,3 +207,5 @@ Please consult the help files for the package within R, or ask questions
 on the [Github discussion
 board](https://github.com/epi-zen/interactionR/discussions) or contact
 the maintainer at babatunde.alli \[at\] mail.mcgill.ca
+
+
