@@ -32,3 +32,11 @@
 ## R CMD check results
 
 0 errors | 0 warnings | 0 note
+
+## What's new?
+* This is a feature release that adds an optional pvalue outputting feature. 
+
+
+## R CMD check results
+
+0 errors | 0 warnings | 0 note
