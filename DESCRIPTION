@@ -1,7 +1,7 @@
 Package: interactionR
 Type: Package
 Title: Full Reporting of Interaction Analyses
-Version: 0.1.2.9000
+Version: 0.1.3
 Author: Babatunde Alli
 Maintainer: Babatunde Alli <babatunde.alli@mail.mcgill.ca>
 Description: Produces a publication-ready table that includes all effect estimates necessary for full reporting effect modification and interaction analysis as recommended by Knol and Vanderweele (2012) [<doi:10.1093/ije/dyr218>].
