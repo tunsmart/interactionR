@@ -1,7 +1,7 @@
 # About interactionR
 
 [![Build
-Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://travis-ci.com/epi-zen/interactionR)
+Status](https://app.travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://app.travis-ci.com/epi-zen/interactionR)
 [![](https://www.r-pkg.org/badges/version/interactionR)](https://cran.r-project.org/package=interactionR)
 ![Downloads](https://cranlogs.r-pkg.org/badges/interactionR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/interactionR)](https://cran.r-project.org/package=interactionR)
@@ -11,12 +11,12 @@ Status](https://travis-ci.com/epi-zen/interactionR.svg?branch=master)](https://t
 InteractionR allows researchers to produce publication-ready tables that
 includes all effect estimates necessary for full reporting effect
 modification and interaction analysis as recommended by Knol and
-Vanderweele (2012) \[<doi:10.1093/ije/dyr218>\]. It also estimates
+Vanderweele (2012) (doi:10.1093/ije/dyr218). It also estimates
 confidence interval for the trio of additive interaction measures using
 the delta method (Hosmer and Lemeshow (1992),
-\[<doi:10.1097/00001648-199209000-00012>\]), variance recovery method
-(Zou (2008), \[<doi:10.1093/aje/kwn104>\]), or percentile bootstrapping
-(Assmann et al. (1996), \[<doi:10.1097/00001648-199605000-00012>\]).
+doi:10.1097/00001648-199209000-00012), variance recovery method
+(Zou (2008), doi:10.1093/aje/kwn104), or percentile bootstrapping
+(Assmann et al. (1996), doi:10.1097/00001648-199605000-00012).
 
 # Installation
 
@@ -203,9 +203,7 @@ issues](https://github.com/epi-zen/interactionR/issues) here on Github.
 
 ### To get support
 
-Please consult the help files for the package within R, or ask questions
-on the [Github discussion
-board](https://github.com/epi-zen/interactionR/discussions) or contact
+Please consult the help files for the package within R or contact
 the maintainer at babatunde.alli \[at\] mail.mcgill.ca
 
 
