@@ -9,6 +9,8 @@ interactionR_table(obj, p.value = FALSE, file_path = NA)
 \arguments{
 \item{obj}{An object of class 'interactionR' generated from any of the main functions in the \code{\link{interactionR}} package}
 
+\item{p.value}{Includes p-values in the generated table if set to TRUE. Default is FALSE.}
+
 \item{file_path}{An optional user-specified string representing the file path to save the generated Word table instead of the current working directory}
 }
 \value{
