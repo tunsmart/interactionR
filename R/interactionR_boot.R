@@ -110,7 +110,7 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
   v3 <- se_vec[beta3]^2
 
   #Extracts p-values from the model
-  pvals <- summary(model)$coefficients[,'Pr(>|z|)']
+  pvals <- summary(model)$coefficients[,4]
 
   ### Extracts the variance-covariance matrix from the model### for use in
   ### the delta method CI estimation for RERI and AP###
