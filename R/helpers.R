@@ -3,7 +3,7 @@ preventive <- function(OR10, OR01) {
 }
 
 invalid <- function(model) {
-  cls <- c("glm", "coxph", "clogit", "lm")
+  cls <- c("glm", "coxph", "clogit", "svyglm")
   return(class(model)[1] %in% cls)
 }
 
