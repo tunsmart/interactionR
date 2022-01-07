@@ -158,8 +158,11 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
 
   # check if any exposure is preventive
   if (preventive(OR10 = exp(b1), OR01 = exp(b2))) {
+    if ("coxph" %in% class(model)) {
+      stop("At least one exposure is preventive. Currently, interactionR() cannot automatically recode models fitted with coxph or clogit. Recode your exposure variables following the examples in Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438, re-fit your model, and re-run interactionR()")
+    }
     if (!recode) {
-      stop("Error: At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
+      stop("At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
     }
     if (recode) {
       temp <- data.frame(cat = c("OR10", "OR01", "OR11"), value = c(
@@ -198,10 +201,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
   }
   #### End of recode section ####
 
-  classes <- c("clogit", "coxph")
-  mod_class <- class(model)[1]
-
-  if (mod_class %in% classes) {
+  if ("coxph" %in% class(model)) {
     se_vec <- summary(model)$coefficients[, 3]
   } else {
     se_vec <- summary(model)$coefficients[, 2]
