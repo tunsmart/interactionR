@@ -32,7 +32,8 @@ test_that("generates error when at least one exposure is preventive and recode i
       ci.type = "delta", ci.level = 0.95,
       em = FALSE, recode = FALSE
     ),
-    "Error: At least one exposure is preventive."
+    "At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438",
+    fixed = TRUE
   )
 })
 
@@ -43,7 +44,8 @@ test_that("generates error when data is not specified within the model call", {
       ci.type = "delta", ci.level = 0.95,
       em = FALSE, recode = TRUE
     ),
-    "Error: Pass the raw data"
+    "Error: Pass the raw data",
+    fixed = TRUE
   )
 })
 
@@ -55,7 +57,8 @@ test_that("Informs the user when carrying out the recoding", {
       ci.type = "delta", ci.level = 0.95,
       em = FALSE, recode = TRUE
     ),
-    "Recoding exposures; new reference category"
+    "Recoding exposures; new reference category",
+    fixed = TRUE
   )
 })
 
