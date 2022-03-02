@@ -15,7 +15,7 @@
 #' Whereas, interaction on the additive scale is more relevant to public health, most authors merely report on the multiplicative scale. The recommendations mentioned above ensures reporting on both scales.
 #'
 #' This function calculates three indices to assess the presence of additive interaction, as defined by Rothman (1998): (1) the relative excess risk due to interaction (RERI), (2) the proportion of disease among those with both exposures that is attributable to their interaction (AP), and (3) the synergy index (SI).
-#' A RERI of one means no interaction or perfect additivity. A RERI of greater than one means positive interaction or more than additivity. A RERI of less than one means negative interaction or less than additivity. RERI ranges from zero to infinity.
+#' A RERI of zero means no interaction or perfect additivity. A RERI of greater than zero means positive interaction or more than additivity. A RERI of less than zero means negative interaction or less than additivity. RERI ranges from zero to infinity.
 #'
 #' An AP of zero means no interaction or perfect additivity. An AP greater than zero means positive interaction or more than additivity. An AP of less than zero means negative interaction or less than additivity. AP ranges from -1 to +1.
 #' The synergy index is the ratio of the combined effects and the individual effects. An SI of one means no interaction or perfect additivity. An SI of greater than one means positive interaction or more than additivity. An SI of less than one means negative interaction or less than additivity. SI ranges from zero to infinity.
@@ -158,13 +158,13 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
 
   # check if any exposure is preventive
   if (preventive(OR10 = exp(b1), OR01 = exp(b2))) {
-    if ("coxph" %in% class(model)) {
-      stop("At least one exposure is preventive. Currently, interactionR() cannot automatically recode models fitted with coxph or clogit. Recode your exposure variables following the examples in Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438, re-fit your model, and re-run interactionR()")
-    }
     if (!recode) {
-      stop("At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
+      warning("At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
     }
     if (recode) {
+      if ("coxph" %in% class(model)) {
+        stop("Currently, interactionR() cannot automatically recode models fitted with coxph or clogit. Recode your exposure variables following the examples in Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438, re-fit your model, and re-run interactionR()")
+      }
       temp <- data.frame(cat = c("OR10", "OR01", "OR11"), value = c(
         exp(b1),
         exp(b2), exp(b1 + b2 + b3)
