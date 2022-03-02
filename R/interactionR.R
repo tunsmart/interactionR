@@ -128,7 +128,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
                          em = T, recode = F) {
   if (!invalid(model)) {
     stop("The 'model' argument must be a regression model object fit with glm(), coxph() or clogit()")
-  } else if (class(exposure_names) != "character") {
+  } else if (class(exposure_names) != "character" || length(exposure_names) != 2) {
     stop("Argument 'exposure_names' requires a character vector of the names of the two exposure variables ")
   }
 
