@@ -25,8 +25,8 @@ d <- data.frame(outcome, exp1, exp2)
 model.prev <- glm(outcome ~ exp1 * exp2, family = binomial(link = "logit"))
 
 
-test_that("generates error when at least one exposure is preventive and recode is set to false", {
-  expect_error(
+test_that("generates warning when at least one exposure is preventive and recode is set to false", {
+  expect_warning(
     interactionR(model.prev,
       exposure_names = c("exp1", "exp2"),
       ci.type = "delta", ci.level = 0.95,
