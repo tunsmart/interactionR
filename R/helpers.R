@@ -3,8 +3,16 @@ preventive <- function(OR10, OR01) {
 }
 
 invalid <- function(model) {
-  cls <- c("glm", "coxph", "clogit", "svyglm")
+  cls <- c("glm", "svyglm", "coxph", "clogit")
   return(class(model)[1] %in% cls)
+}
+
+check_arguments <- function(model, exposure_names) {
+  if (!invalid(model)) {
+    stop("The 'model' argument must be a regression model object fit with glm(), coxph() or clogit()")
+  } else if (class(exposure_names) != "character" || length(exposure_names) != 2) {
+    stop("Argument 'exposure_names' requires a character vector of the names of the two exposure variables")
+  }
 }
 
 # for bstrap

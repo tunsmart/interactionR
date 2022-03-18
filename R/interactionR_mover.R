@@ -65,13 +65,13 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
 
   # check if any exposure is preventive
   if (preventive(OR10 = exp(b1), OR01 = exp(b2))) {
-    if ("coxph" %in% class(model)) {
-      stop("At least one exposure is preventive. Currently, interactionR() cannot automatically recode models fitted with coxph or clogit. Recode your exposure variables following the examples in Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438, re-fit your model, and re-run interactionR()")
-    }
     if (!recode) {
-      stop("Error: At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
+      warning("At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
     }
     if (recode) {
+      if ("coxph" %in% class(model)) {
+        stop("Currently, interactionR() cannot automatically recode models fitted with coxph or clogit. Recode your exposure variables following the examples in Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438, re-fit your model, and re-run interactionR()")
+      }
       temp <- data.frame(cat = c("OR10", "OR01", "OR11"), value = c(
         exp(b1),
         exp(b2), exp(b1 + b2 + b3)
@@ -83,7 +83,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
 
       # extract the raw data that was used to fit the model
       if (class(model$data) == "environment") {
-        stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm(), clogit(), or coxph() call")
+        stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm() call")
       }
       dat.ir <- model$data
 
@@ -99,6 +99,7 @@ interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em 
 
       # refit model with user's original call
       model <- update(model, . ~ ., data = dat.ir)
+
       # get new coefficients and ORs
       b1 <- coef(model)[beta1]
       b2 <- coef(model)[beta2]

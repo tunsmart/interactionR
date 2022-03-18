@@ -126,11 +126,7 @@
 #' @importFrom msm deltamethod
 interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.level = 0.95,
                          em = T, recode = F) {
-  if (!invalid(model)) {
-    stop("The 'model' argument must be a regression model object fit with glm(), coxph() or clogit()")
-  } else if (class(exposure_names) != "character" || length(exposure_names) != 2) {
-    stop("Argument 'exposure_names' requires a character vector of the names of the two exposure variables ")
-  }
+  check_arguments(model, exposure_names)
 
   # Estimates the critical value from the supplied CI.level for
   # subsequent CI estimations
@@ -176,7 +172,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
 
       # extract the raw data that was used to fit the model
       if (class(model$data) == "environment") {
-        stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm(), clogit(), or coxph() call")
+        stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm() call")
       }
       dat.ir <- model$data
 

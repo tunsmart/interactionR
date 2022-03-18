@@ -1,10 +1,10 @@
 library(interactionR)
+
 ## Generate exposure variables
 n <- 2000
-set.seed(750)
 exp1 <- rbinom(n, size = 1, p = 0.2)
-set.seed(520)
 exp2 <- rbinom(n, size = 1, p = 0.6)
+exp3 <- runif(n)
 
 ## Make at least one of the exposures preventive for the outcome
 b0 <- log(1)
@@ -15,15 +15,13 @@ bexp1exp2 <- log(0.75)
 ## Generate outcome
 ppred <- b0 + bexp1 * exp1 + bexp2 * exp2 + bexp1exp2 * exp1 * exp2
 p <- exp(ppred) / (1 + exp(ppred))
-set.seed(30)
 outcome <- rbinom(n, size = 1, p = p)
 
 ## Create dataframe
-d <- data.frame(outcome, exp1, exp2)
+d <- data.frame(outcome, exp1, exp2, exp3)
 
 ## Fit a logistic regression model with the data
 model.prev <- glm(outcome ~ exp1 * exp2, family = binomial(link = "logit"))
-
 
 test_that("generates warning when at least one exposure is preventive and recode is set to false", {
   expect_warning(
@@ -45,6 +43,32 @@ test_that("generates error when data is not specified within the model call", {
       em = FALSE, recode = TRUE
     ),
     "Error: Pass the raw data",
+    fixed = TRUE
+  )
+})
+
+test_that("generates error when non-suported model is fitted", {
+  model <- lm(exp3 ~ exp2, data=d)
+  expect_error(
+    interactionR(model,
+                 exposure_names = c("exp1", "exp2"),
+                 ci.type = "delta", ci.level = 0.95,
+                 em = FALSE, recode = FALSE
+    ),
+    "The 'model' argument must be a regression model object fit with glm(), coxph() or clogit()",
+    fixed = TRUE
+  )
+})
+
+test_that("generates error when exposure names is not two", {
+  model <- glm(exp3 ~ exp2, data=d)
+  expect_error(
+    interactionR(model,
+                 exposure_names = c("exp1", "exp2", "exp3"),
+                 ci.type = "delta", ci.level = 0.95,
+                 em = FALSE, recode = FALSE
+    ),
+    "Argument 'exposure_names' requires a character vector of the names of the two exposure variables",
     fixed = TRUE
   )
 })
