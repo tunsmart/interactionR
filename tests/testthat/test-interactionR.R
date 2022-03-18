@@ -73,6 +73,32 @@ test_that("generates error when exposure names is not two", {
   )
 })
 
+test_that("generates error when exposure name cannot be found in model", {
+  model <- glm(exp3 ~ exp2*exp1, data=d)
+  expect_error(
+    interactionR(model,
+                 exposure_names = c("exp1", "exp3"),
+                 ci.type = "delta", ci.level = 0.95,
+                 em = FALSE, recode = FALSE
+    ),
+    "At least one of the exposure names you have identified cannot be found in your model",
+    fixed = TRUE
+  )
+})
+
+test_that("generates error when exposures interaction cannot be found in the model", {
+  model <- glm(outcome ~ exp2*exp3 + exp1, data=d)
+  expect_error(
+    interactionR(model,
+                 exposure_names = c("exp1", "exp3"),
+                 ci.type = "delta", ci.level = 0.95,
+                 em = FALSE, recode = FALSE
+    ),
+    "The interaction you specified in your exposure_names argument cannot be found in the model",
+    fixed = TRUE
+  )
+})
+
 test_that("Informs the user when carrying out the recoding", {
   model.prev2 <- glm(outcome ~ exp1 * exp2, family = binomial(link = "logit"), data = d)
   expect_warning(
