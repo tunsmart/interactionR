@@ -56,13 +56,13 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
 
   # check if any exposure is preventive
   if (preventive(OR10 = exp(b1), OR01 = exp(b2))) {
-    if ("coxph" %in% class(model)) {
-      stop("At least one exposure is preventive. Currently, interactionR() cannot automatically recode models fitted with coxph or clogit. Recode your exposure variables following the examples in Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438, re-fit your model, and re-run interactionR()")
-    }
     if (!recode) {
-      stop("Error: At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
+      warning("At least one exposure is preventive. Set argument recode=TRUE for the exposures to be automatically recoded. see Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438")
     }
     if (recode) {
+      if ("coxph" %in% class(model)) {
+        stop("Currently, interactionR() cannot automatically recode models fitted with coxph or clogit. Recode your exposure variables following the examples in Knol et al. (2011) European Journal of Epidemiology, 26(6), 433-438, re-fit your model, and re-run interactionR()")
+      }
       temp <- data.frame(cat = c("OR10", "OR01", "OR11"), value = c(
         exp(b1),
         exp(b2), exp(b1 + b2 + b3)
@@ -74,7 +74,7 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
 
       # extract the raw data that was used to fit the model
       if (class(model$data) == "environment") {
-        stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm(), clogit(), or coxph() call")
+        stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm() call")
       }
       dat.ir <- model$data
 
@@ -90,20 +90,16 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
 
       # refit model with user's original call
       model <- update(model, . ~ ., data = dat.ir)
+
       # get new coefficients and ORs
       b1 <- coef(model)[beta1]
       b2 <- coef(model)[beta2]
       b3 <- coef(model)[beta3]
     }
   }
-
   #### End of recode section ####
 
-  if ("coxph" %in% class(model)) {
-    se_vec <- summary(model)$coefficients[, 3]
-  } else {
-    se_vec <- summary(model)$coefficients[, 2]
-  } # extracts the SE vector for the coefficients from the model
+  se_vec <- summary(model)$coefficients[, 2] # extracts the SE vector for the coefficients from the model
 
   v1 <- se_vec[beta1]^2
   v2 <- se_vec[beta2]^2
@@ -112,10 +108,8 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
   #Extracts p-values from the model
   pvals <- summary(model)$coefficients[,4]
 
-  ### Extracts the variance-covariance matrix from the model### for use in
-  ### the delta method CI estimation for RERI and AP###
+  ### Extracts the variance-covariance matrix from the model#
   v_cov <- vcov(model)
-  v_cov1 <- v_cov[varNames, varNames] # for deltamethod
   cov12 <- v_cov[beta1, beta2]
   cov13 <- v_cov[beta1, beta3]
   cov23 <- v_cov[beta2, beta3]
