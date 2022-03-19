@@ -45,5 +45,13 @@
 
 0 errors | 0 warnings | 0 note
 
+## Test environments
+* Mac-OS-latest (R release)
+* Windows-latest (R release)
+* Ubuntu-latest (R devel)
+* Ubuntu-latest (R release)
+* Ubuntu-latest (R old-release-1)
+* Win-builder (R old-release-1, R release, R devel)
+
 ## What's new?
 * Numerous bug fixes. Made recoding for preventive exposure optional. Added many argument checks to allow the package the fail gracefully.
