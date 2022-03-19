@@ -174,10 +174,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
       E2.ref <- substr(ref.cat, 4, 4)
 
       # extract the raw data that was used to fit the model
-      if (class(model$data) == "environment") {
-        stop("Error: Pass the raw data that you used to fit the model to the 'data' argument of your glm() call")
-      }
-      dat.ir <- model$data
+      dat.ir <- model.frame(model)
 
       # recode based on new reference category
       dat.ir[[beta1]] <- ifelse(dat.ir[[beta1]] == E1.ref, 0, 1)

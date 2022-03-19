@@ -35,18 +35,6 @@ test_that("generates warning when at least one exposure is preventive and recode
   )
 })
 
-test_that("generates error when data is not specified within the model call", {
-  expect_error(
-    interactionR(model.prev,
-      exposure_names = c("exp1", "exp2"),
-      ci.type = "delta", ci.level = 0.95,
-      em = FALSE, recode = TRUE
-    ),
-    "Error: Pass the raw data",
-    fixed = TRUE
-  )
-})
-
 test_that("generates error when non-suported model is fitted", {
   model <- lm(exp3 ~ exp2, data=d)
   expect_error(
