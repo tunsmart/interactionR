@@ -1,3 +1,9 @@
+interactionR 0.1.4
+==================
+
+*Numerous bug fixes
+*Made recoding optional when at least one exposure is preventive
+
 interactionR 0.1.3
 ==================
 

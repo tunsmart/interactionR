@@ -40,3 +40,10 @@
 ## R CMD check results
 
 0 errors | 0 warnings | 0 note
+
+## R CMD check results
+
+0 errors | 0 warnings | 0 note
+
+## What's new?
+* Numerous bug fixes. Made recoding for preventive exposure optional. Added many argument checks to allow the package the fail gracefully.
