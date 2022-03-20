@@ -1,3 +1,8 @@
+interactionR 0.1.5
+==================
+
+*Quick patch for the last update. Made a correction on an important information for RERI in the documentation.
+
 interactionR 0.1.4
 ==================
 
