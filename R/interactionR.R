@@ -208,7 +208,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
   v3 <- se_vec[beta3]^2
 
   #Extracts p-values from the model
-  pvals <- summary(model)$coefficients[,4]
+  pvals <- extract_pvals(model)
 
   ### Extracts the variance-covariance matrix from the model### for use in
   ### the delta and MOVER method CI estimation for RERI and AP###

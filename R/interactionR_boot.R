@@ -103,7 +103,7 @@ interactionR_boot <- function(model, ci.level = 0.95, em = T, recode = F, seed =
   v3 <- se_vec[beta3]^2
 
   #Extracts p-values from the model
-  pvals <- summary(model)$coefficients[,4]
+  pvals <- pvals <- extract_pvals(model)
 
   ### Extracts the variance-covariance matrix from the model#
   v_cov <- vcov(model)

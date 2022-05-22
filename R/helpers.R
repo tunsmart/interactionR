@@ -17,6 +17,14 @@ check_arguments <- function(model, exposure_names) {
   }
 }
 
+extract_pvals <- function(model) {
+  if ("glm" %in% class(model)) {
+   return(summary(model)$coefficients[,4])
+  } else {
+   return(summary(model)$coefficients[,5])
+  }
+}
+
 # for bstrap
 trio <- function(obj) {
   exp1 <- names(coef(obj))[2]
