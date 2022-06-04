@@ -54,7 +54,7 @@
 * Win-builder (R old-release-1, R release, R devel)
 
 ## What's new?
-* Numerous bug fixes. Made recoding for preventive exposure optional. Added many argument checks to allow the package the fail gracefully.
+* Numerous bug fixes. Made recoding for preventive exposure optional. Added many argument checks to allow the package to fail gracefully.
 
 ## What's new?
 * Made an important material correction for RERI in the documentation.
