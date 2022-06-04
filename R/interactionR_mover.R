@@ -33,11 +33,8 @@
 #' @export
 interactionR_mover <- function(model, exposure_names = c(), ci.level = 0.95, em = T,
                                recode = F) {
-  if (!invalid(model)) {
-    stop("The 'model' argument must be a regression model object fit with glm() and link = 'logit', coxph() or clogit()")
-  } else if (class(exposure_names) != "character") {
-    stop("Argument 'exposure_names' requires a character vector of the names of the two exposure variables ")
-  }
+
+  check_arguments(model, exposure_names)
 
   # Estimates the critical value from the supplied CI.level for
   # subsequent CI estimations

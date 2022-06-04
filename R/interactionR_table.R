@@ -34,7 +34,7 @@
 #' @import officer
 #' @export
 interactionR_table <- function(obj, p.value = FALSE, file_path = NA) {
-  if (class(obj) != "interactionR") {
+  if (!is(obj, "interactionR")) {
     stop("Argument 'obj' must be an object of class 'interactionR',
              use the interactionR() function to generate such object ")
   }
