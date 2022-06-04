@@ -1,3 +1,8 @@
+interactionR 0.1.6
+==================
+
+*Bug fix to correct 95%CI estimation for survival objects 
+
 interactionR 0.1.5
 ==================
 

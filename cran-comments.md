@@ -58,3 +58,6 @@
 
 ## What's new?
 * Made an important material correction for RERI in the documentation.
+
+## What's new?
+*Fix to correct pvalue estimation for survival objects 
