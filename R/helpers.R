@@ -21,7 +21,7 @@ extract_pvals <- function(model) {
   if ("glm" %in% class(model)) {
    return(summary(model)$coefficients[,4])
   } else {
-   return(summary(model)$coefficients[,5])
+   return(summary(model)$coefficients[,6])
   }
 }
 
