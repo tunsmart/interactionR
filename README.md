@@ -1,6 +1,6 @@
 # About interactionR
 
-[![R-CMD-check](https://github.com/epi-zen/interactionR/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/epi-zen/interactionR/actions/workflows/check-standard.yaml)
+[![R-CMD-check](https://github.com/tunsmart/interactionR/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/tunsmart/interactionR/actions/workflows/check-standard.yaml)
 [![](https://www.r-pkg.org/badges/version/interactionR)](https://cran.r-project.org/package=interactionR)
 ![Downloads](https://cranlogs.r-pkg.org/badges/interactionR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/interactionR)](https://cran.r-project.org/package=interactionR)
