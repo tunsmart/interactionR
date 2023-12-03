@@ -23,11 +23,11 @@ interactionR is on
 `install.packages("interactionR")`.
 
 You can also install the development version from
-[GitHub](https://github.com/epi-zen/interactionR) with:
+[GitHub](https://github.com/tunsmart/interactionR) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("epi-zen/interactionR")
+devtools::install_github("tunsmart/interactionR")
 ```
 
 # Implementation
