@@ -1,6 +1,6 @@
 citHeader("To cite interactionR in publications use:")
 
-citEntry(
+bibentry(
   entry    = "Article",
   title    = "InteractionR: An R package for full reporting of
   effect modification and interaction",
