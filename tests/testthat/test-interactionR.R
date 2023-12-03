@@ -74,6 +74,46 @@ test_that("generates error when exposure name cannot be found in model", {
   )
 })
 
+
+test_that("works correctly with numeric exposure variables", {
+  model <- glm(exp3 ~ exp1 * exp2, data=d)
+  expect_no_error(
+    interactionR(model,
+                 exposure_names = c("exp1", "exp2"),
+                 ci.type = "delta", ci.level = 0.95,
+                 em = FALSE, recode = FALSE
+    )
+  )
+})
+
+test_that("works correctly with character/factor exposure variables", {
+  d$exp1 <- as.factor(exp1)
+  d$exp2 <- as.factor(exp2)
+  model <- glm(outcome ~ exp1 * exp2, data=d, family = binomial(link = "logit"))
+  expect_no_error(
+    interactionR(model,
+                 exposure_names = c("exp1", "exp2"),
+                 ci.type = "delta", ci.level = 0.95,
+                 em = FALSE, recode = FALSE
+    )
+  )
+})
+
+test_that("works correctly with unknown postfix in exposure variables (using factor levels)", {
+  d$exp1 <- factor(exp1, levels = c(0, 1), labels = c("No", "Yes"))
+  d$exp2 <- factor(exp2, levels = c(0, 1), labels = c("No", "Yes"))
+
+  model <- glm(outcome ~ exp1 * exp2, data=d, family = binomial(link = "logit"))
+  expect_no_error(
+    interactionR(model,
+                 exposure_names = c("exp1", "exp2"),
+                 ci.type = "delta", ci.level = 0.95,
+                 em = FALSE, recode = FALSE
+    )
+  )
+})
+
+
 test_that("generates error when exposures interaction cannot be found in the model", {
   model <- glm(outcome ~ exp2*exp3 + exp1, data=d)
   expect_error(
