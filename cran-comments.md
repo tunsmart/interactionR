@@ -64,6 +64,7 @@
 
 ## What's new?
 *Fix p.value calculation for Synergy Index
+*Relax arguments checking to prevent wierd failures
 
 
 

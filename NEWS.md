@@ -1,7 +1,7 @@
 interactionR 0.1.7
 ==================
 
-*Patch to correct pvalue estimation for survival objects
+*Patch to correct pvalue estimation for SI and relax argument checkings
 
 interactionR 0.1.6
 ==================
