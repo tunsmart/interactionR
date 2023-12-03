@@ -197,7 +197,7 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
 
   CI.ll_SI <- exp(lnSI - z * se_SI)
   CI.ul_SI <- exp(lnSI + z * se_SI)
-  p.SI <- NA
+  p.SI <- 1 - plnorm(exp(lnSI/se_SI))
 
   d <- data.frame(Measures = c(
     "OR00", "OR01", "OR10", "OR11", paste("OR(",
@@ -266,8 +266,8 @@ interactionR_delta <- function(model, exposure_names = c(), ci.level = 0.95, em 
   if (exists("dat.ir")) {
     raw_data <- dat.ir
   }
-  #d$p = ifelse(d$p < 0.001, "<0.001", round(d$p, 8))
-  d$p = round(d$p, 6)
+
+  d$p = round(d$p, 5)
 
   ir <- list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call, dat = raw_data)
   attr(ir, "class") <- "interactionR"

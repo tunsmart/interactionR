@@ -389,7 +389,7 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
 
     SIL <- exp(lnSI - z * se_SI)
     SIU <- exp(lnSI + z * se_SI)
-    p.SI <- 1 - pnorm(exp(lnSI/se_SI))
+    p.SI <- 1 - plnorm(exp(lnSI/se_SI))
 
   } else {
     stop("Argument 'ci.type' must be 'delta' or 'mover' ")
@@ -456,6 +456,8 @@ interactionR <- function(model, exposure_names = c(), ci.type = "delta", ci.leve
   if (exists("dat.ir")) {
     raw_data <- dat.ir
   }
+
+  d$p = round(d$p, 5)
 
   ir <- list(dframe = d, exp_names = c(beta1, beta2), analysis = em, call = model$call, dat = raw_data)
   attr(ir, "class") <- "interactionR"
