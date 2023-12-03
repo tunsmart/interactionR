@@ -61,3 +61,9 @@
 
 ## What's new?
 *Fix to correct pvalue estimation for survival objects 
+
+## What's new?
+*Fix p.value calculation for Synergy Index
+
+
+

@@ -1,3 +1,8 @@
+interactionR 0.1.7
+==================
+
+*Patch to correct pvalue estimation for survival objects
+
 interactionR 0.1.6
 ==================
 
