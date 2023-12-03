@@ -9,7 +9,7 @@ bibentry(
   volume   = "10",
   number   = "00147",
   pages    = "0-0",
-  doi      = "https://doi.org/10.1016/j.simpa.2021.100147",
+  doi      = "10.1016/j.simpa.2021.100147",
   textVersion = paste("Babatunde Y. Alli (2021).",
   "InteractionR: An R package for full reporting of effect modification and interaction.", "Software Impacts, 10, 100147.", "doi:10.1016/j.simpa.2021.100147")
 )

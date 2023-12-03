@@ -197,7 +197,7 @@ both development and releases.
 ### To report problems, bugs or issues
 
 Please use [interactionR
-issues](https://github.com/epi-zen/interactionR/issues) here on Github.
+issues](https://github.com/tunsmart/interactionR/issues) here on Github.
 
 ### To get support
 
